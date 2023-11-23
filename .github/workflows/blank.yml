@@ -1,5 +1,5 @@
-.devcontainer # - nombre: Configurar Java JDK
-  usos: acciones/setup-java@v3.13.0
+ - nombre: Configurar Java JDK
+  usos: setup-java@v3.13.0
   con:
     # La versión de Java a configurar. Toma una versión completa o parcial de Java. Vea ejemplos de sintaxis admitidas en el archivo README
     versión java: # opcional
