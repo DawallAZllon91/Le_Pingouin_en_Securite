@@ -1,4 +1,4 @@
-.devcontainer # - nombre: Configurar Java JDK
+# - nombre: Configurar Java JDK
   usos: acciones/setup-java@v3.13.0
   con:
     # La versión de Java a configurar. Toma una versión completa o parcial de Java. Vea ejemplos de sintaxis admitidas en el archivo README
@@ -74,16 +74,3 @@ jobs:
         run: |
           echo Add other actions to build,
           echo test, and deploy your project.
-
-                      - nombre: cargar información del corredor
-  # Puedes fijar la confirmación exacta o la versión.
-  # usos: devops-actions/load-runner-info@2722eef3f2147e230b89e4469dd664c10de13f24
-  usos: devops-actions/load-runner-info@v1.0.9
-  con:
-    # Slug de la organización a analizar.
-    organización: # Le Pingouin en Sécurité
-    # Slug del repositorio a analizar.
-    repositorio: # palmera-esponjosa
-    # Token de acceso para usar en el análisis con admin:org o con el propietario del repositorio si lo ejecuta en un repositorio
-    token de acceso: 5420
-          
