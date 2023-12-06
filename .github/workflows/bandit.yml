@@ -49,6 +49,7 @@ jobs:
           # skips: # optional, default is DEFAULT
           # path to a .bandit file that supplies command line arguments
           # ini_path: # optional, default is DEFAULT
+          
             - nombre: Configurar el entorno Node.js
   usos: acciones/setup-node@v4.0.0
   con:
@@ -89,4 +90,25 @@ jobs:
     fail-on-cache-miss: # opcional, el valor predeterminado es falso
     # Comprobar si existe una entrada de caché para las entradas dadas (clave, claves de restauración) sin descargar el caché
     solo búsqueda: # opcional, el valor predeterminado es falso
+          
+[![.github/workflows/bandit.yml](https://github.com/DawallAZllon91/fluffy-palm-tree/actions/workflows/bandit.yml/badge.svg?event=issue_comment)](https://github.com/DawallAZllon91/fluffy-palm-tree/actions/workflows/bandit.yml)
+
+            - nombre: cargar un artefacto de construcción
+  usos: acciones/upload-artifact@v3.1.3
+  con:
+    # Nombre del artefacto
+    nombre: # opcional, el valor predeterminado es artefacto
+    # Un archivo, directorio o patrón comodín que describe qué cargar
+    camino:
+    # El comportamiento deseado si no se encuentran archivos utilizando la ruta proporcionada.
+Opciones Disponibles:
+  advertir: genera una advertencia pero no falla la acción
+  error: falla la acción con un mensaje de error
+  ignorar: no genera ninguna advertencia ni error, la acción no falla
+
+    if-no-files-found: # opcional, el valor predeterminado es advertir
+    # Duración tras la cual el artefacto caducará en días. 0 significa utilizar la retención predeterminada.
+Mínimo 1 día. Máximo 90 días a menos que se cambie desde la página de configuración del repositorio.
+
+    días de retención: # opcional
           
