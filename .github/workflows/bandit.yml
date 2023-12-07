@@ -89,4 +89,109 @@ jobs:
     fail-on-cache-miss: # opcional, el valor predeterminado es falso
     # Comprobar si existe una entrada de caché para las entradas dadas (clave, claves de restauración) sin descargar el caché
     solo búsqueda: # opcional, el valor predeterminado es falso
+        
+## Cleaning up orphan processes
+            - nombre: Cerrar problemas obsoletos
+  usos: acciones/stale@v4.1.1
+  con:
+    # Token para el repositorio. Se puede pasar usando `{{ secrets.GITHUB_TOKEN }}`.
+    token de repositorio: # opcional, el valor predeterminado es ${{ github.token }}
+    # El mensaje a publicar sobre el problema al etiquetarlo. Si no se proporciona ninguno, no marcará los problemas como obsoletos.
+    mensaje-problema-obsoleto: # opcional
+    # El mensaje que se publicará en la solicitud de extracción al etiquetarla. Si no se proporciona ninguno, no marcará las solicitudes de extracción como obsoletas.
+    mensaje-pr-obsoleto: # opcional
+    # El mensaje a publicar sobre el problema al cerrarlo. Si no se proporciona ninguno, no comentaremos al cerrar un problema.
+    mensaje de cierre del problema: # opcional
+    # El mensaje a publicar en la solicitud de extracción al cerrarla. Si no se proporciona ninguno, no comentará al cerrar una solicitud de extracción.
+    cerrar-pr-mensaje: # opcional
+    # El número de días que puede tener un problema o una solicitud de extracción antes de marcarlo como obsoleto. Configúrelo en -1 para nunca marcar problemas o solicitudes de extracción como obsoletos automáticamente.
+    días antes de que esté obsoleto: # opcional, el valor predeterminado es 60
+    # El número de días que puede tener un problema antes de marcarlo como obsoleto. Configúrelo en -1 para nunca marcar los problemas como obsoletos automáticamente. Anule la opción "días antes de que esté obsoleto" con respecto únicamente a los problemas.
+    días antes del problema: # opcional
+    # El número de días que puede tener una solicitud de extracción antes de marcarla como obsoleta. Configúrelo en -1 para nunca marcar las solicitudes de extracción como obsoletas automáticamente. Anule la opción "días antes del obsoleto" con respecto únicamente a las solicitudes de extracción.
+    días-antes-pr-stale: # opcional
+    # La cantidad de días que se deben esperar para cerrar un problema o una solicitud de extracción después de que se marque como obsoleto. Establezca en -1 para nunca cerrar problemas obsoletos o solicitudes de extracción.
+    días antes del cierre: # opcional, el valor predeterminado es 7
+    # La cantidad de días que se deben esperar para cerrar un problema después de que se marque como obsoleto. Establezca en -1 para no cerrar nunca problemas obsoletos. Anule la opción "días antes del cierre" con respecto únicamente a los problemas.
+    días antes del cierre del problema: # opcional
+    # La cantidad de días que se deben esperar para cerrar una solicitud de extracción después de que se marque como obsoleta. Establezca en -1 para nunca cerrar solicitudes de extracción obsoletas. Anule la opción "días antes del cierre" solo con respecto a las solicitudes de extracción.
+    días-antes-del-cierre-pr: # opcional
+    # La etiqueta que se aplicará cuando un problema esté obsoleto.
+    etiqueta-problema obsoleto: # opcional, el valor predeterminado es obsoleto
+    # La etiqueta que se aplicará cuando se cierre un problema.
+    etiqueta de cierre de problema: # opcional
+    # Las etiquetas que significan un problema están exentas de marcarse como obsoletas. Separe varias etiquetas con comas (por ejemplo, "etiqueta1,etiqueta2").
+    etiquetas de problemas exentos: # opcional, el valor predeterminado es
+    # La etiqueta que se aplicará cuando una solicitud de extracción está obsoleta.
+    stale-pr-label: # opcional, el valor predeterminado es obsoleto
+    # La etiqueta que se aplicará cuando se cierre una solicitud de extracción.
+    cerrar-etiqueta-pr: # opcional
+    # Las etiquetas que significan que una solicitud de extracción están exentas de marcarse como obsoletas. Separe varias etiquetas con comas (por ejemplo, "etiqueta1,etiqueta2").
+    exento-pr-labels: # opcional, el valor predeterminado es
+    # Los hitos que significan un problema o un pull request están exentos de marcarse como obsoletos. Separe varios hitos con comas (por ejemplo, "hito1,hito2").
+    hitos exentos: # opcional, el valor predeterminado es
+    # Los hitos que significan que un problema está exento de ser marcado como obsoleto. Separe varios hitos con comas (por ejemplo, "hito1,hito2"). Anule la opción "hitos exentos" con respecto únicamente a los problemas.
+    hitos de problemas exentos: # opcional, el valor predeterminado es
+    # Los hitos que significan que una solicitud de extracción está exenta de marcarse como obsoleta. Separe varios hitos con comas (por ejemplo, "hito1,hito2"). Anule la opción "hitos exentos" con respecto únicamente a las solicitudes de extracción.
+    except-pr-milestones: # opcional, el valor predeterminado es
+    # Eximir todos los problemas y solicitudes de extracción con hitos de ser marcados como obsoletos. El valor predeterminado es falso.
+    exento de todos los hitos: # opcional, el valor predeterminado es falso
+    # Exime que todos los problemas con hitos se marquen como obsoletos. Anule la opción "exentos de todos los hitos" con respecto únicamente a los problemas.
+    hitos-exentos-de-todos los problemas: # opcional, el valor predeterminado es
+    # Eximir todas las solicitudes de extracción con hitos de ser marcadas como obsoletas. Anule la opción "exentos de todos los hitos" con respecto únicamente a las solicitudes de extracción.
+    except-all-pr-milestones: # opcional, el valor predeterminado es
+    # Solo se verifican los problemas o solicitudes de extracción con todas estas etiquetas si están obsoletos. El valor predeterminado es `` (deshabilitado) y puede ser una lista de etiquetas separadas por comas.
+    etiquetas únicas: # opcional, el valor predeterminado es
+    # Solo se verifican los problemas o solicitudes de extracción con al menos una de estas etiquetas si están obsoletos. El valor predeterminado es `` (deshabilitado) y puede ser una lista de etiquetas separadas por comas.
+    cualquiera de las etiquetas: # opcional, el valor predeterminado es
+    # Solo se verifican los problemas con al menos una de estas etiquetas si están obsoletos. El valor predeterminado es `` (deshabilitado) y puede ser una lista de etiquetas separadas por comas. Anule la opción "cualquiera de las etiquetas" con respecto únicamente a los problemas.
+    etiquetas de cualquier problema: # opcional, el valor predeterminado es
+    # Solo se verifican las solicitudes de extracción con al menos una de estas etiquetas si están obsoletas. El valor predeterminado es `` (deshabilitado) y puede ser una lista de etiquetas separadas por comas. Anule la opción "cualquiera de las etiquetas" con respecto únicamente a las solicitudes de extracción.
+    cualquiera de las etiquetas pr: # opcional, el valor predeterminado es
+    # Solo se verifican los problemas con todas estas etiquetas si están obsoletos. El valor predeterminado es `[]` (deshabilitado) y puede ser una lista de etiquetas separadas por comas. Anule la opción "solo etiquetas" con respecto únicamente a los problemas.
+    etiquetas de único problema: # opcional, el valor predeterminado es
+    # Solo se verifican las solicitudes de extracción con todas estas etiquetas si están obsoletas. El valor predeterminado es `[]` (deshabilitado) y puede ser una lista de etiquetas separadas por comas. Anule la opción "solo etiquetas" con respecto únicamente a las solicitudes de extracción.
+    only-pr-labels: # opcional, el valor predeterminado es
+    # El número máximo de operaciones por ejecución, utilizado para controlar la limitación de velocidad (relacionado con GitHub API CRUD).
+    operaciones por ejecución: # opcional, el valor predeterminado es 30
+    # Elimine las etiquetas obsoletas de los problemas y las solicitudes de extracción cuando se actualicen o comenten.
+    remove-stale-when-update: # opcional, el valor predeterminado es verdadero
+    # Elimine las etiquetas obsoletas de los problemas cuando se actualicen o comenten. Anule la opción "eliminar obsoleto cuando se actualiza" solo con respecto a los problemas.
+    eliminar-problema-obsoleto-cuando-se-actualiza: # opcional, el valor predeterminado es
+    # Eliminar etiquetas obsoletas de las solicitudes de extracción cuando se actualizan o comentan. Anule la opción "eliminar obsoleto cuando se actualiza" solo con respecto a las solicitudes de extracción.
+    remove-pr-stale-when-update: # opcional, el valor predeterminado es
+    # Ejecute el procesador en modo de depuración sin realizar ninguna operación en problemas activos.
+    solo depuración: # opcional, el valor predeterminado es falso
+    # El orden para obtener problemas o solicitudes de extracción. El valor predeterminado es falso, que es descendente.
+    ascendente: # opcional, el valor predeterminado es falso
+    # Eliminar la rama git después de cerrar una solicitud de extracción obsoleta.
+    eliminar-rama: # opcional, el valor predeterminado es falso
+    # La fecha utilizada para omitir la acción obsoleta en el problema/solicitud de extracción creada antes (ISO 8601 o RFC 2822).
+    fecha de inicio: # opcional, el valor predeterminado es
+    # Los asignatarios que eximen que un problema o una solicitud de extracción se marquen como obsoletos. Separe varios asignados con comas (por ejemplo, "usuario1,usuario2").
+    cesionarios exentos: # opcional, el valor predeterminado es
+    # Los cesionarios que eximen que un problema se marque como obsoleto. Separe varios asignados con comas (por ejemplo, "usuario1,usuario2"). Anule la opción "cesionarios exentos" con respecto únicamente a los problemas.
+    asignatarios de problemas exentos: # opcional, el valor predeterminado es
+    # Los asignatarios que eximen que una solicitud de extracción se marque como obsoleta. Separe varios asignados con comas (por ejemplo, "usuario1,usuario2"). Anule la opción "asignados exentos" con respecto únicamente a las solicitudes de extracción.
+    exentos-pr-assignates: # opcional, el valor predeterminado es
+    # Eximir todas las incidencias y solicitudes de extracción con asignados de ser marcadas como obsoletas. El valor predeterminado es falso.
+    eximir a todos los asignados: # opcional, el valor predeterminado es falso
+    # Exime que todos los problemas con los asignados se marquen como obsoletos. Anule la opción "exentos a todos los asignados" con respecto únicamente a los problemas.
+    exentos de todos los problemas asignados: # opcional, el valor predeterminado es
+    # Eximir todas las solicitudes de extracción con asignados de ser marcadas como obsoletas. Anule la opción "todos los asignados exentos" con respecto únicamente a las solicitudes de extracción.
+    eximir a todos los asignados: # opcional, el valor predeterminado es
+    # Evite que los borradores de solicitudes de extracción se marquen como obsoletos. El valor predeterminado es falso.
+    exento-borrador-pr: # opcional, el valor predeterminado es falso
+    # Mostrar algunas estadísticas al final sobre el flujo de trabajo obsoleto (solo cuando los registros están habilitados).
+    enable-statistics: # opcional, el valor predeterminado es verdadero
+    # Una lista delimitada por comas de etiquetas para agregar cuando un problema obsoleto o una solicitud de extracción recibe actividad y se le elimina la etiqueta de problema obsoleto o la etiqueta de pr obsoleto.
+    etiquetas para agregar cuando no están actualizadas: # opcional, el valor predeterminado es
+    # Una lista delimitada por comas de etiquetas para eliminar cuando un problema obsoleto o una solicitud de extracción recibe actividad y se le elimina la etiqueta de problema obsoleto o la etiqueta de pr obsoleto.
+    etiquetas-para-eliminar-cuando-no están en uso: # opcional, el valor predeterminado es
+    # Cualquier actualización (actualización/comentario) puede restablecer el tiempo de inactividad obsoleto en los problemas y solicitudes de extracción.
+    ignorar actualizaciones: # opcional, el valor predeterminado es falso
+    # Cualquier actualización (actualización/comentario) puede restablecer el tiempo de inactividad de los problemas. Anule la opción "ignorar actualizaciones" con respecto únicamente a los problemas.
+    ignorar-actualizaciones-de-problemas: # opcional, el valor predeterminado es
+    # Cualquier actualización (actualización/comentario) puede restablecer el tiempo de inactividad obsoleto en las solicitudes de extracción. Anule la opción "ignorar actualizaciones" solo con respecto a las solicitudes de extracción.
+    ignore-pr-updates: # opcional, el valor predeterminado es
           
