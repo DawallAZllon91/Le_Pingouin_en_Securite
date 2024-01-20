@@ -92,6 +92,15 @@ jobs:
         project-type: gradle
     - name: Run tests
       run: ./gradlew appmap test
+
+    # Begin AppMap bootstrap archive step
+    - name: Archive AppMaps
+      id: appmap-bootstrap-archive-appmaps
+      uses: getappmap/archive-action@v1
+      with:
+        revision: ${{ github.event.pull_request.base.sha }}
+    # End AppMap bootstrap archive step
+
     - name: Commit changes
       uses: EndBug/add-and-commit@v9
       with:
