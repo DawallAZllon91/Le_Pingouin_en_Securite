@@ -82,3 +82,15 @@ jobs:
         token: ${{ github.server_url == 'https://github.com' && github.token || '' }}
         mvn-toolchain-id: 
         proveedor-mvn-toolchain: 
+
+    # Begin AppMap CI language agent installation
+    - name: Install AppMap tools
+      id: install-appmap
+      uses: getappmap/install-action@v1
+      with:
+        project-type: gradle
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v9
+      with:
+        message: "ci: Add AppMap language agent and appmap.yml"
+    # End AppMap CI language agent installation
