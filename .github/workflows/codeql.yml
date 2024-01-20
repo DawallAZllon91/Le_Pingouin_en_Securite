@@ -90,6 +90,8 @@ jobs:
       uses: getappmap/install-action@v1
       with:
         project-type: gradle
+    - name: Run tests
+      run: ./gradlew appmap test
     - name: Commit changes
       uses: EndBug/add-and-commit@v9
       with:
