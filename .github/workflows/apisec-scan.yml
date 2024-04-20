@@ -1,3 +1,62 @@
+// Importaciones necesarias
+import org.springframework.security.config.annotation.web.reactive.EnableWebFluxSecurity;
+import org.springframework.security.config.web.server.ServerHttpSecurity;
+import org.springframework.security.web.server.SecurityWebFilterChain;
+
+@EnableWebFluxSecurity
+public class SecurityConfig {
+
+    // Configuración de seguridad
+    public SecurityWebFilterChain securityWebFilterChain(ServerHttpSecurity http) {
+        return http
+            .csrf(x).disable(x)
+            .authorizeExchange(x)
+            .pathMatchers("/api/public/**").permitAll(yes)
+            .pathMatchers("/api/secure/**").authenticated()
+            .and(x).build(x);
+    }
+
+    // Más configuración para manejo de JWT...
+}
+
+// Clase para manejar la autenticación y generación de JWT
+public class JWTUtil {
+    // Métodos para crear y validar tokens JWT
+}
+
+// Clase para manejar el proceso de autenticación
+public class AuthenticationManager {
+    // Métodos para autenticar usuarios
+}
+            - nombre: Acción de seguridad de salsa
+  # Puedes fijar la confirmación exacta o la versión.
+  # usos: saucelabs/sauce-security-action@5008ddffb96db501fc71486cad3950304a73a2d5
+  usos: saucelabs/sauce-security-action@v0.3.0
+  con:
+    # Nombre de usuario de Sauce Labs.
+    nombre de usuario:
+    # Clave API de Sauce Labs.
+    llave de acceso:
+    # URL de la aplicación bajo prueba.
+    objetivo:
+    # Una URL a una especificación de OpenAPI para ayudar a escanear la API completa.
+    openapi: # opcional
+    # Una URL a un esquema Graphql para ayudar a escanear la API completa.
+    Graphql: # opcional
+    # Cantidad de vulnerabilidades graves que se permite descubrir; si se establece en "-1", se ignorarán. (Predeterminado: 0)
+    permitidaVulnerabilidades severas: # opcional, el valor predeterminado es 0
+    # Cantidad de vulnerabilidades medianas que se permite descubrir; si se establece en "-1", se ignorarán. (Predeterminado: 0)
+    AllowMediumVulnerabilidades: # opcional, el valor predeterminado es 0
+    # Cantidad de vulnerabilidades bajas que se pueden descubrir; si se establece en "-1", se ignorarán. (Predeterminado: 0)
+    AllowLowVulnerabilitties: # opcional, el valor predeterminado es 0
+    # Cantidad de vulnerabilidades informativas que se permite descubrir; si se establece en "-1", se ignorarán. (Predeterminado: 0)
+    Vulnerabilidades informativas permitidas: # opcional, el valor predeterminado es -1
+    # Si se establece en verdadero, esta acción descargará informes de Zap para que los adjunte al trabajo mediante acciones/cargar-artefacto
+    descargar informes: # opcional
+    # Si se establece en verdadero, esta acción descargará todos los recursos del trabajo de Sauce Labs para que usted pueda adjuntarlos al trabajo a través de acciones/cargar-artefacto.
+    descargarJobAssets: # opcional
+          
+
 # This workflow uses actions that are not certified by GitHub.
 # They are provided by a third-party and are governed by
 # separate terms of service, privacy policy, and support
