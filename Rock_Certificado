@@ -1,0 +1,54 @@
+
+Detalles de ejecución
+Archivo de flujo de trabajo para esta ejecución
+.github/workflows/release.yml en 939ac1b
+# Construya el paquete Boulder Debian en cada PR, envíelo a principal y etiquete el envío. En
+# etiquetas push, cree adicionalmente una versión de GitHub y con el Debian resultante
+# paquete.
+# Mantener la sincronización con try-release.yml, con la excepción de try-release.yml
+# puede tener varias entradas en su matriz, pero esta solo debe tener una.
+nombre : versión de compilación
+en :
+  empujar :
+    etiquetas :
+      - liberar-*
+
+trabajos :
+  empujar-liberar :
+    estrategia :
+      fallo rápido : falso
+      matriz :
+        GO_VERSION :
+          - " 1.22.2 "
+    se ejecuta : ubuntu-20.04
+    permisos :
+      contenido : escribir
+    pasos :
+      - usos : acciones/checkout@v4
+        con :
+          credenciales persistentes : falso
+
+      - nombre : compilar .deb
+        identificación : construir
+        entorno :
+          GO_VERSION : ${{ matriz.GO_VERSION }}
+        ejecutar : ./tools/make-assets.sh
+
+      - nombre : Calcular sumas de comprobación
+        id : sumas de verificación
+        # Los archivos enumerados en esta línea deben ser idénticos a los archivos cargados
+        # en el último paso.
+        ejecutar : sha256sum roca*.deb roca*.tar.gz >| sumas de comprobación.txt
+
+      - nombre : Crear lanzamiento
+        entorno :
+          GITHUB_TOKEN : ${{ secretos.GITHUB_TOKEN }}
+        # https://cli.github.com/manual/gh_release_create
+        ejecutar : gh lanzamiento crear "${GITHUB_REF_NAME}"
+        continuar en caso de error : verdadero
+
+      - nombre : cargar archivos de lanzamiento
+        entorno :
+          GITHUB_TOKEN : ${{ secretos.GITHUB_TOKEN }}
+        # https://cli.github.com/manual/gh_release_upload
+        ejecutar : gh liberar subir "${GITHUB_REF_NAME}" boulder*.deb boulder*.tar.gz checksums.txt
