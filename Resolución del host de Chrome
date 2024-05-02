@@ -1,0 +1,888 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#dns
+Subject: =?utf-8?Q?Resoluci=C3=B3n=20del=20host=20de=20Chrome?=
+Date: Thu, 2 May 2024 17:42:17 -0600
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52----"
+
+
+------MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52----
+Content-Type: text/html
+Content-ID: <frame-27AB09438BE513FED585A9289FBD93BE@mhtml.blink>
+Content-Transfer-Encoding: binary
+Content-Location: https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#dns
+
+<!DOCTYPE html><html lang="es" class="translated-ltr"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Resolución del host de Chrome</title><link rel="stylesheet" type="text/css" href="https://chromium.googlesource.com/+static/base.css"><link rel="stylesheet" type="text/css" href="https://chromium.googlesource.com/+static/doc.css"><link rel="stylesheet" type="text/css" href="https://chromium.googlesource.com/+static/prettify/prettify.css"><!-- default customHeadTagPart --><link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.26tY-h6gH9w.L.W.O/am=AAM/d=0/rs=AN8SPfrUh4eQMB1I5qTj-4-oeXAO15kIQQ/m=el_main_css"></head><body class="Site"><header class="Site-header "><div class="Header"><div class="Header-title"></div></div></header><div class="Site-content Site-Content--markdown"><div class="Container"><div class="doc"><h1><a class="h" name="Chrome-Host-Resolution" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Chrome-Host-Resolution"><span></span></a><a class="h" name="chrome-host-resolution" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#chrome-host-resolution"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Resolución del host de Chrome</font></font></h1><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Implementación y soporte de resolución de host para la pila de red de Chrome. Incluye implementaciones de cliente de protocolos de resolución de host (DNS y mDNS), almacenamiento en caché de resolución de host, soporte para manejar la resolución del host del sistema (incluida la lectura de archivos HOSTS y el seguimiento de la configuración de red del sistema relacionada con la resolución del host) y varias utilidades relacionadas.</font></font></p><div class="promo"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Nota: “DNS” en este directorio (incluido el nombre del directorio) se utiliza a menudo como abreviatura para todas las resoluciones de host, no solo las que utilizan el sistema de nombres de dominio. Este documento intenta utilizar "DNS" sólo para hacer referencia al Sistema de nombres de dominio real, excepto cuando se refiere a cadenas o rutas que contienen otros usos de "DNS".</font></font></div><div class="toc" role="navigation"><h2><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Contenido</font></font></h2><div class="toc-aux"><ul><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Usage"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Uso</font></font></a></li><ul><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#From-outside-the-network-service"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Desde fuera del servicio de red</font></font></a></li><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#From-inside-the-network-service"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Desde dentro del servicio de red</font></font></a></li><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Stand_alone-tools"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Herramientas independientes</font></font></a></li></ul><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Test-support"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Soporte de prueba</font></font></a></li><ul><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#MockHostResolver"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">MockHostResolver</font></font></a></li><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#TestHostResolver"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">PruebaHostResolver</font></font></a></li><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Request-remapping"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Solicitar reasignación</font></font></a></li></ul><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Implementation"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Implementación</font></font></a></li><ul><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#HostResolver"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Resolutor de host</font></font></a></li><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#HostResolverManager"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Administrador de resolución de host</font></font></a></li><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Host-resolution-sources"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fuentes de resolución del host</font></font></a></li><li><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#IPv6-and-connectivity"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">IPv6 y conectividad</font></font></a></li></ul></ul></div></div><h2><a class="h" name="Usage" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Usage"><span></span></a><a class="h" name="usage" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#usage"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Uso</font></font></h2><h3><a class="h" name="From-outside-the-network-service" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#From-outside-the-network-service"><span></span></a><a class="h" name="from-outside-the-network-service" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#from-outside-the-network-service"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Desde fuera del servicio de red</font></font></h3><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">La mayor parte de la interacción con la resolución del host debe realizarse a través del </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/services/network/README.md"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">servicio de red</font></font></a> <a href="https://chromium.googlesource.com/chromium/src/+/main/services/network/public/mojom/host_resolver.mojom"><code class="code">network::HostResolver</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> , recuperado del </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/services/network/public/mojom/network_context.mojom"><code class="code">network::NetworkContext</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">uso </font></font><code class="code">network::NetworkContext::CreateHostResolver()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">La resolución del host se solicita mediante </font></font><code class="code">network::HostResolver::ResolveHost()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. También hay un atajo que se utiliza </font></font><code class="code">network::NetworkContext::ResolveHost()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">cuando no se necesita un objeto transitable separado.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Algunas utilidades generales también están disponibles y </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/public"><code class="code">/net/dns/public/</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">están diseñadas para ser utilizadas por cualquier código, dentro o fuera del servicio de red. De lo contrario, el código fuera del servicio de red nunca debería interactuar directamente con el código en </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns"><code class="code">/net/dns/</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><h3><a class="h" name="From-inside-the-network-service" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#From-inside-the-network-service"><span></span></a><a class="h" name="from-inside-the-network-service" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#from-inside-the-network-service"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Desde dentro del servicio de red</font></font></h3><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Dentro del servicio de red o dentro de la pila de redes de Chrome, la resolución del host pasa por </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/host_resolver.h"><code class="code">net::HostResolver</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, recuperado de </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/url_request/url_request_context.h"><code class="code">net::URLRequestContext</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><h3><a class="h" name="Stand_alone-tools" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Stand_alone-tools"><span></span></a><a class="h" name="stand_alone-tools" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#stand_alone-tools"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Herramientas independientes</font></font></h3><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Las pruebas y las herramientas independientes que no forman parte del navegador pueden interactuar con la resolución del host directamente creando sus propios HostResolvers usando </font></font><code class="code">net::HostResolver::CreateStandaloneResolver()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><h2><a class="h" name="Test-support" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Test-support"><span></span></a><a class="h" name="test-support" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#test-support"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Soporte de prueba</font></font></h2><h3><a class="h" name="MockHostResolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#MockHostResolver"><span></span></a><a class="h" name="mockhostresolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#mockhostresolver"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">MockHostResolver</font></font></h3><p><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/mock_host_resolver.h"><code class="code">net::MockHostResolver</code></a></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Las pruebas con capacidad de inyectar y reemplazar lo usado </font></font><code class="code">net::HostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">deben reemplazarlo con un </font></font><code class="code">net::MockHostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, permitiendo resultados basados ​​en reglas. </font></font><code class="code">net::MockCachingHostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">es lo mismo excepto que incluye soporte básico para la funcionalidad de almacenamiento en caché que normalmente realizan prod </font></font><code class="code">net::HostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">s.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Algunas pruebas también pueden resultar </font></font><code class="code">net::HangingHostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">útiles. Comenzará las solicitudes de resolución del host, pero nunca las completará hasta la cancelación.</font></font></p><h3><a class="h" name="TestHostResolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#TestHostResolver"><span></span></a><a class="h" name="testhostresolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#testhostresolver"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">PruebaHostResolver</font></font></h3><p><a href="https://chromium.googlesource.com/chromium/src/+/main/content/public/test/test_host_resolver.h"><code class="code">content::TestHostResolver</code></a></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Utilizado por la mayoría de las pruebas de navegadores (a través de </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/content/public/test/browser_test_base.h"><code class="code">content::BrowserTestBase</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">), </font></font><code class="code">content::TestHostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">se instala en el momento de la creación globalmente en todos los solucionadores de host en el proceso. De forma predeterminada, solo permite la resolución del host local y regresa </font></font><code class="code">net::ERR_NAME_NOT_RESOLVED</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">para otros nombres de host. Permite establecer reglas para otros resultados usando </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/mock_host_resolver.h"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">net::RuleBasedHostResolverProc</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> .</font></font></p><div class="note"><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Advertencia:</font></font></strong> <code class="code">content::TestHostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> solo reemplaza la resolución de la dirección del host en el sistema y luego usa artificialmente dicha resolución del sistema para muchas solicitudes que normalmente se manejarían de manera diferente (por ejemplo, usando el cliente DNS integrado). Esto significa que una cantidad significativa de la lógica de resolución normal del host de producción se omitirá en las pruebas que utilicen </font></font><code class="code">content::TestHostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></div><h3><a class="h" name="Request-remapping" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Request-remapping"><span></span></a><a class="h" name="request-remapping" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#request-remapping"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Solicitar reasignación</font></font></h3><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">La mayoría de la lógica de producción para crear HostResolvers comprobará si se ha solicitado alguna reasignación global. En el navegador, esto se solicita mediante el indicador de línea de comando </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/services/network/public/cpp/network_switches.h"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">"host-resolver-rules"</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> .</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Consulte </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/base/host_mapping_rules.h"><code class="code">net::HostMappingRules</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">para obtener detalles sobre el formato de la cadena de reglas. Permite reasignar cualquier nombre de host de solicitud a otro nombre de host, una dirección IP o un error NOTFOUND.</font></font></p><h2><a class="h" name="Implementation" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Implementation"><span></span></a><a class="h" name="implementation" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#implementation"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Implementación</font></font></h2><h3><a class="h" name="HostResolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#HostResolver"><span></span></a><a class="h" name="hostresolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#hostresolver"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Resolutor de host</font></font></h3><p><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/host_resolver.h"><code class="code">net::HostResolver</code></a></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">La interfaz principal para solicitar resolución de host dentro de la pila de red o servicio de red. En prod, generalmente se posee y se recupera según sea necesario de </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/url_request/url_request_context.h"><code class="code">net::URLRequestContext</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">s. Creado usando </font></font><code class="code">net::HostResolver::CreateResolver()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">o </font></font><code class="code">net::HostResolver::CreateStandaloneResolver()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Se utilizan varias implementaciones en prod.</font></font></p><h4><a class="h" name="ContextHostResolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#ContextHostResolver"><span></span></a><a class="h" name="contexthostresolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#contexthostresolver"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">ContextHostResolver</font></font></h4><p><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/context_host_resolver.h"><code class="code">net::ContextHostResolver</code></a></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">La principal implementación de </font></font><code class="code">net::HostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. Se espera que sea propiedad 1:1 de un único </font></font><code class="code">net::URLRequestContext</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, que </font></font><code class="code">net::ContextHostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">posee o mantiene referencias a las propiedades por URLRequestContext utilizadas para la resolución del host, incluido un </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/host_cache.h"><code class="code">net::HostCache</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En la resolución, llama a un subyacente </font></font><code class="code">net::HostResolverManager</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">con las propiedades por contexto.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Al destruirse, cancela silenciosamente todas las solicitudes de resolución del host realizadas a través de la </font></font><code class="code">net::ContextHostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">instancia. Esto evita que el subyacente </font></font><code class="code">net::HostResolverManager</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">continúe haciendo referencia a las propiedades por contexto que pueden destruirse al destruir </font></font><code class="code">net::URLRequestContext</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">o </font></font><code class="code">net::ContextHostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><h4><a class="h" name="MappedHostResolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#MappedHostResolver"><span></span></a><a class="h" name="mappedhostresolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#mappedhostresolver"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">MappedHostResolver</font></font></h4><p><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/mapped_host_resolver.h"><code class="code">net::MappedHostResolver</code></a></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Una implementación envolvente alrededor de otra </font></font><code class="code">net::HostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. Mantiene reglas de reasignación de solicitudes para reasignar nombres de host de solicitudes a otros nombres de host o direcciones IP.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Se utiliza para implementar el indicador de línea de comando </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/services/network/public/cpp/network_switches.h"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">"host-resolver-rules"</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> .</font></font></p><h4><a class="h" name="StaleHostResolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#StaleHostResolver"><span></span></a><a class="h" name="stalehostresolver" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#stalehostresolver"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">StaleHostResolver</font></font></h4><p><a href="https://chromium.googlesource.com/chromium/src/+/main/components/cronet/stale_host_resolver.h"><code class="code">cronet::StaleHostResolver</code></a></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Una implementación envolvente alrededor de otra </font></font><code class="code">net::HostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. Devuelve datos obsoletos (caducados o invalidados por cambios de red) cuando </font></font><code class="code">net::HostCache</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">los resultados no obsoletos tardan más que un tiempo de espera configurable. Reduce la latencia de resolución del host a expensas de la precisión.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Sólo utilizado y creado por </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/components/cronet/README.md"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cronet</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> .</font></font></p><h3><a class="h" name="HostResolverManager" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#HostResolverManager"><span></span></a><a class="h" name="hostresolvermanager" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#hostresolvermanager"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Administrador de resolución de host</font></font></h3><p><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/host_resolver_manager.h"><code class="code">net::HostResolverManager</code></a></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Programador y controlador de solicitudes de resolución del host. Contiene la lógica para la resolución inmediata del host desde fuentes locales rápidas (por ejemplo, consultas de correos electrónicos </font></font><code class="code">net::HostCache</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, literales de direcciones IP, etc.). Acelera, programa y fusiona trabajos asincrónicos para su resolución desde fuentes de red más lentas.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Al destruirse, cancela silenciosamente todas las solicitudes de resolución del host en curso.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En producción, </font></font><code class="code">net::HostResolverManager</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">generalmente se usa un único recurso compartido para todo el navegador. El administrador compartido es propiedad de </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/services/network/network_service.h"><code class="code">network::NetworkService</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><h4><a class="h" name="Request" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Request"><span></span></a><a class="h" name="request" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#request"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Pedido</font></font></h4><p><code class="code">net::HostResolverManager::RequestImpl</code></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Implementación </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/host_resolver.h"><code class="code">net::HostResolver::ResolveHostRequest</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">y representación global de una única solicitud de resolución de un </font></font><code class="code">net::HostResolverManager</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. El </font></font><code class="code">RequestImpl</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">objeto en sí actúa principalmente sólo como un contenedor de parámetros y resultados para la solicitud, dejando la lógica real a </font></font><code class="code">net::HostResolverManager</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">sí mismo.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Datos recopilados en esta capa:</font></font></p><ul><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.Request.TotalTime” (recomendado para experimentos)</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.Request.TotalTimeAsync”</font></font></li></ul><h4><a class="h" name="Job" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Job"><span></span></a><a class="h" name="job" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#job"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Trabajo</font></font></h4><p><code class="code">net::HostResolverManager::Job</code></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Representación de un trabajo asincrónico para resolución desde fuentes de red más lentas. Contiene la lógica para determinar y consultar la fuente adecuada para los resultados de la resolución del host con soporte de reintento y respaldo a otras fuentes. Al finalizar, agrega resultados a </font></font><code class="code">net::HostCache</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">los mensajes de correo electrónico relevantes e invoca devoluciones de llamadas de solicitud.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Se pueden combinar varias solicitudes en un solo trabajo si son compatibles. Esto incluye fusionar trabajos recién iniciados con trabajos que ya se están ejecutando.</font></font></p><p><code class="code">net::HostResolverManager</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">programa y acelera la ejecución </font></font><code class="code">net::HostResolverManager::Job</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">de s usando un </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/base/prioritized_dispatcher.h"><code class="code">net::PrioritizedDispatcher</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. La limitación es importante para evitar el exceso de trabajo de las fuentes de red, especialmente los enrutadores domésticos mal diseñados que pueden fallar solo en una pequeña cantidad de resoluciones DNS simultáneas.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Datos recopilados en esta capa:</font></font></p><ul><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.ResolveSuccessTime”</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.ResolveFailureTime”</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.ResolveCategoría”</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.ResolveError.Fast”</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.ResolveError.Lento”</font></font></li></ul><h3><a class="h" name="Host-resolution-sources" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#Host-resolution-sources"><span></span></a><a class="h" name="host-resolution-sources" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#host-resolution-sources"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Fuentes de resolución del host</font></font></h3><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Se utilizan varias fuentes para consultar la resolución del host. Las fuentes que utilizará a </font></font><code class="code">net::HostResolverManager::Job</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">se determinan antes de ejecutar el trabajo mediante </font></font><code class="code">net::HostResolverManager::CreateTaskSequence()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, lo que genera una lista que </font></font><code class="code">net::HostResolverManager::TaskType</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">especifica el orden de las fuentes a intentar. De forma predeterminada, esto utilizará la lógica interna para decidir la fuente a utilizar y, a menudo, permitirá recurrir a fuentes adicionales.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Las fuentes elegidas de forma predeterminada también se ven afectadas por el modo DNS seguro, determinado de forma predeterminada </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/dns_config.h"><code class="code">net::DnsConfig::secure_dns_mode</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">pero anulable para solicitudes individuales que utilizan </font></font><code class="code">net::HostResolver::ResolveHostParameters::secure_dns_mode_override</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Las fuentes específicas para una solicitud se pueden especificar usando </font></font><code class="code">net::HostResolver::ResolveHostParameters::source</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">y </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/host_resolver_source.h"><code class="code">net::HostResolverSource</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Luego, el trabajo utilizará objetos *Task que implementan el comportamiento específico de las fuentes de resolución particulares.</font></font></p><h4><a class="h" name="SYSTEM" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#SYSTEM"><span></span></a><a class="h" name="system" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#system"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">SISTEMA</font></font></h4><p><code class="code">net::HostResolverSource::SYSTEM</code> <code class="code">net::HostResolverManager::TaskType::SYSTEM</code></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Implementado por:</font></font><code class="code">net::HostResolverSystemTask</code></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Generalmente se le llama “resolución del sistema” o, a veces, “resolución de proc” (porque históricamente siempre se implementó usando net::HostResolverProc). Los resultados se consultan desde el sistema o el sistema operativo mediante la </font></font><code class="code">getaddrinfo()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">llamada API del sistema operativo. Esta fuente solo es capaz de resolver direcciones (A y AAAA), pero también consultará información del nombre del canon si la solicitud incluye la </font></font><code class="code">HOST_RESOLVER_CANONNAME</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">bandera. El sistema consultará desde su propia caché interna, archivos HOSTS, DNS y, a veces, mDNS, según las capacidades del sistema.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cuando las solicitudes de resolución del host no especifican una fuente, el solucionador del sistema siempre se utilizará para la </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">resolución de direcciones</font></font></strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> cuando </font><font style="vertical-align: inherit;">se cumpla </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">cualquiera de las siguientes condiciones:</font></font></strong><font style="vertical-align: inherit;"></font></p><ul><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Peticiones con la </font></font><code class="code">HOST_RESOLVER_CANONNAME</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">bandera</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Para nombres de host que terminan en ".local"</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cuando el modo DNS seguro está </font></font><code class="code">net::SecureDnsMode::OFF</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">y </font></font><code class="code">net::HostResolverSource::DNS</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">no está habilitado a través de</font></font><code class="code">net::HostResolverManager::SetInsecureDnsClientEnabled(true)</code></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cuando no se pudo determinar la configuración DNS del sistema</font></font></li></ul><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Las solicitudes de DNS seguras no se pueden realizar utilizando el solucionador del sistema.</font></font></p><p><code class="code">net::HostResolverSystemTask</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">El comportamiento de puede anularse mediante una anulación global asincrónica (por ejemplo, en caso de que sea necesario eliminar la resolución del proceso actual por razones de espacio aislado). De lo contrario, publica una tarea de bloqueo en a </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/base/task/thread_pool.h"><code class="code">base::ThreadPool</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">para realizar solicitudes de resolución de bloqueo en proceso. En un tiempo de espera, se realizan intentos adicionales, pero los intentos anteriores no se cancelan ya que no existe ningún mecanismo de cancelación para </font></font><code class="code">getaddrinfo()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. Se utiliza el primer intento de finalización y se ignoran los demás intentos de finalización.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">En producción, el ejecutor de la tarea de bloqueo siempre llama a </font></font><code class="code">SystemHostResolverCall()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, lo que realiza la llamada real para </font></font><code class="code">getaddrinfo()</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">utilizar el </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/address_info.h"><code class="code">net::AddressInfo</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">asistente. En las pruebas, el ejecutor de la tarea de bloqueo puede utilizar una implementación de prueba de </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/host_resolver_proc.h"><code class="code">net::HostResolverProc</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, que a su vez puede encadenarse.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Datos recopilados específicamente para esta fuente:</font></font></p><ul><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.SystemTask.SuccessTime”</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.SystemTask.FailureTime”</font></font></li></ul><h4><a class="h" name="DNS" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#DNS"><span></span></a><a class="h" name="dns" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#dns"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">DNS</font></font></h4><p><code class="code">net::HostResolverSource::DNS</code> <code class="code">net::HostResolverManager::TaskType::DNS</code> <code class="code">net::HostResolverManager::TaskType::SECURE_DNS</code></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Implementado por:</font></font><code class="code">net::HostResolverManager::DnsTask</code></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Generalmente se le llama “resolución integrada” o “resolución asíncrona”. Los resultados se consultan desde DNS mediante </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/dns_client.h"><code class="code">net::DnsClient</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, una implementación de la pila de red de Chrome de un "resolvedor de código auxiliar" de DNS o "cliente DNS".</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cuando las solicitudes de resolución del host no especifican una fuente, se utilizará el solucionador integrado cuando </font><font style="vertical-align: inherit;">se cumpla </font></font><strong><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">todo lo siguiente:</font></font></strong><font style="vertical-align: inherit;"></font></p><ul><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">DnsClient está habilitado para solicitudes inseguras habilitadas a través de </font></font><code class="code">net::HostResolverManager::SetInsecureDnsClientEnabled(true)</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">o el modo DNS seguro no </font></font><code class="code">net::SecureDnsMode::OFF</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">La configuración DNS del sistema se pudo determinar con éxito</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">El nombre de host de la solicitud no termina en ".local"</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">La solicitud no es una consulta de dirección con la </font></font><code class="code">HOST_RESOLVER_CANONNAME</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">bandera.</font></font></li></ul><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Creará </font></font><code class="code">net::HostResolverManager::DnsTask</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">y ejecutará un archivo </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/dns_transaction.h"><code class="code">net::DnsTransaction</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">para cada par de nombre/tipo de DNS que se consultará. Luego, la tarea procesará los resultados exitosos del archivo </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/dns_response.h"><code class="code">net::DnsResponse</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cuando una solicitud requiere resultados A y AAAA, se manejan a través de dos </font></font><code class="code">net::DnsTransaction</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">s separados y </font></font><code class="code">net::HostResolverManager::DnsTask</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">solicitarán una segunda ranura de la </font></font><code class="code">net::PrioritizedDispatcher</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">utilizada por </font></font><code class="code">net::HostResolverManager</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. La transacción A se inicia inmediatamente al iniciar el </font></font><code class="code">net::HostResolverManager::DnsTask</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, y la transacción AAAA se inicia una vez que se puede obtener una segunda ranura de despachador.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cada uno </font></font><code class="code">net::DnsTransaction</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">crea internamente una serie de </font></font><code class="code">net::DnsAttempt</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">mensajes de correo electrónico, cada uno de los cuales representa una solicitud de DNS individual. Un solo </font></font><code class="code">net::DnsTransaction</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">puede ejecutar muchos </font></font><code class="code">net::DnsAttempt</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">correos electrónicos debido a la lógica de reintento, el respaldo entre múltiples servidores DNS configurados y la permutación de nombres debido a los sufijos de búsqueda configurados.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Datos recopilados específicamente para esta fuente (más internamente para </font></font><code class="code">net::DnsTransaction</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">la implementación que no se enumeran aquí):</font></font></p><ul><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.DnsTask.SuccessTime”</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.InsecureDnsTask.FailureTime”</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.JobQueueTime.PerTransaction”</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.JobQueueTime.Failure”</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">“Net.DNS.JobQueueTime.Éxito”</font></font></li></ul><h4><a class="h" name="MULTICAST_DNS" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#MULTICAST_DNS"><span></span></a><a class="h" name="multicast_dns" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#multicast_dns"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">MULTIDIFUSIÓN_DNS</font></font></h4><p><code class="code">net::HostResolverSource::MULTICAST_DNS</code> <code class="code">net::HostResolverManager::TaskType::MDNS</code></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Implementado por</font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/host_resolver_mdns_task.h"><code class="code">net::HostResolverMdnsTask</code></a></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Los resultados se consultan desde mDNS utilizando </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/mdns_client.h"><code class="code">net::MDnsClient</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Cuando las solicitudes de resolución de host no especifican una fuente, mDNS solo se usa para solicitudes que no son de dirección cuando el nombre de host de la solicitud termina en ".local".</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Las solicitudes mDNS comienzan con </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/host_resolver_mdns_task.h"><code class="code">net::HostResolverMdnsTask</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, lo que creará y ejecutará una </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/mdns_client.h"><code class="code">net::MDnsTransaction</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">para cada tipo de consulta necesaria.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">A diferencia de </font></font><code class="code">net::HostResolverManager::DnsTask</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">, cada uno </font></font><code class="code">net::HostResolverMdnsTask</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">solo utilizará una única ranura de despachador, incluso cuando se consulten simultáneamente los tipos A y AAAA.</font></font></p><p><code class="code">net::MDnsClient</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">mantiene su propia caché, separada de la principal </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/host_cache.h"><code class="code">net::HostCache</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">propiedad de </font></font><a href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/context_host_resolver.h"><code class="code">net::ContextHostResolver</code></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. Como tal, los resultados de mDNS nunca se almacenan en caché en el archivo </font></font><code class="code">net::HostCache</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">.</font></font></p><h3><a class="h" name="IPv6-and-connectivity" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#IPv6-and-connectivity"><span></span></a><a class="h" name="ipv6-and-connectivity" href="https://chromium.googlesource.com/chromium/src/+/main/net/dns/README.md#ipv6-and-connectivity"><span></span></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">IPv6 y conectividad</font></font></h3><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Algunos servidores DNS mal escritos, especialmente en enrutadores domésticos, desconocen la existencia de IPv6 y provocarán un mal rendimiento o incluso fallarán cuando se envíen consultas DNS AAAA.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Para evitar estos problemas, </font></font><code class="code">net::HostResolverManager</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">detecta heurísticamente redes solo IPv4 intentando una conexión UDP </font></font><code class="code">2001:4860:4860::8888</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">(la dirección IPv6 para el DNS público de Google). Si la conexión falla, Chrome convertirá las solicitudes de resolución del host </font></font><code class="code">net::DnsQueryType::UNSPECIFIED</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">a </font></font><code class="code">net::DnsQueryType::A</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. Esto generalmente da como resultado que se rechacen las solicitudes AAAA.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Excepciones cuando las solicitudes AAAA siempre se permiten a pesar de una verificación de conectividad fallida:</font></font></p><ul><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">La solicitud de resolución del host solicita explícitamente</font></font><code class="code">net::DnsQueryType::AAAA</code></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Resolución literal de dirección IP, incluido cuando una solicitud de nombre de host se ha reescrito en una dirección IP literal usando</font></font><code class="code">net::MappedHostResolver</code></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Resultados leídos de archivos HOSTS donde no hay ningún resultado IPv4 sin bucle invertido. Tenga en cuenta que esta excepción solo se aplica cuando Chrome realiza la lectura desde HOSTS. Cuando no se utiliza el cliente DNS integrado de Chrome, el sistema solo lee HOSTS, donde Chrome solo solicitará resultados A para evitar que el sistema realice consultas DNS AAAA.</font></font></li></ul><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">La heurística para detectar redes sólo IPv4 no es perfecta. Por ejemplo, falla y no permite solicitudes AAAA en redes privadas (sin acceso global a Internet, incluido el DNS público de Google) solo IPv6, lo que podría interrumpir la mayor parte del uso de Chrome en la red porque, al ser una red solo IPv6, los resultados AAAA son necesarios.</font></font></p><p><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Soluciones alternativas para permitir que Chrome intente cargar puntos finales IPv6 cuando falla la verificación de conectividad:</font></font></p><ul><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Al iniciar Chrome, ¿ </font></font><code class="code">--host-resolver-rules="MAP the.hostname.com [dead::beef]"</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">dónde </font></font><code class="code">the.hostname.com</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">está el nombre de host para permitir la resolución y </font></font><code class="code">dead::beef</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">la dirección IPv6 para resolverlo? </font></font><code class="code">net::MappedHostResolver</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">actúa a un nivel anterior a las comprobaciones de conectividad IPv6 y, si un nombre de host se reasigna a un literal de IP, las comprobaciones de conectividad no se aplican.</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Agregue entradas para que los nombres de host se resuelvan en el archivo HOSTS con solo resultados de IPv6. Sólo funciona con el cliente DNS integrado.</font></font></li><li><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Agregue una ruta de red a </font></font><code class="code">2001:4860:4860::8888</code><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">. En realidad, no tiene que ser funcional (podría simplemente enviarle solicitudes). Siempre que Chrome pueda conectar un socket UDP a la dirección, pasará la verificación heurística de conectividad IPv6.</font></font></li></ul></div></div></div><!-- default customFooter --><footer class="Site-footer"><div class="Footer"><span class="Footer-poweredBy"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Desarrollado por </font></font><a href="https://gerrit.googlesource.com/gitiles/"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Gitiles</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> | </font></font><a href="https://policies.google.com/privacy"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Privacidad</font></font></a><font style="vertical-align: inherit;"><font style="vertical-align: inherit;"> | </font></font><a href="https://policies.google.com/terms"><font style="vertical-align: inherit;"><font style="vertical-align: inherit;">Términos</font></font></a></span><div class="Footer-links"></div></div></footer><div id="goog-gt-tt" class="VIpgJd-yAWNEb-L7lbkb skiptranslate" style="border-radius: 12px; margin: 0 0 0 -23px; padding: 0; font-family: 'Google Sans', Arial, sans-serif;" data-id=""><div id="goog-gt-vt" class="VIpgJd-yAWNEb-hvhgNd"><div class=" VIpgJd-yAWNEb-hvhgNd-l4eHX-i3jM8c"><img src="https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg" width="24" height="24" alt=""></div><div class=" VIpgJd-yAWNEb-hvhgNd-k77Iif-i3jM8c"><div class="VIpgJd-yAWNEb-hvhgNd-IuizWc" dir="ltr">Texto original</div><div id="goog-gt-original-text" class="VIpgJd-yAWNEb-nVMfcd-fmcmS VIpgJd-yAWNEb-hvhgNd-axAV1"></div></div><div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid ltr"><div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od ltr" dir="ltr"><div class="VIpgJd-yAWNEb-hvhgNd-UTujCb">Valora esta traducción</div><div class="VIpgJd-yAWNEb-hvhgNd-eO9mKe">Tu opinión servirá para ayudar a mejorar el Traductor de Google</div></div><div class="VIpgJd-yAWNEb-hvhgNd-xgov5 ltr"><button id="goog-gt-thumbUpButton" type="button" class="VIpgJd-yAWNEb-hvhgNd-bgm6sf" title="Buena traducción" aria-label="Buena traducción" aria-pressed="false"><span id="goog-gt-thumbUpIcon"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 7 7H2v13h16c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V9c0-1.1-.9-2-2-2zM7 18H4V9h3v9zm14-7l-3 7H9V8l4.34-4.34L12 9h9v2z"></path></svg></span><span id="goog-gt-thumbUpIconFilled"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 7 7v13h11c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V9c0-1.1-.9-2-2-2zM5 7H1v13h4V7z"></path></svg></span></button><button id="goog-gt-thumbDownButton" type="button" class="VIpgJd-yAWNEb-hvhgNd-bgm6sf" title="Mala traducción" aria-label="Mala traducción" aria-pressed="false"><span id="goog-gt-thumbDownIcon"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M3 17h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 24s7.09-6.85 7.17-7h5V4H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2zM17 6h3v9h-3V6zM3 13l3-7h9v10l-4.34 4.34L12 15H3v-2z"></path></svg></span><span id="goog-gt-thumbDownIconFilled"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M3 17h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 24s7.09-6.85 7.17-7V4H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2zm16 0h4V4h-4v13z"></path></svg></span></button></div></div><div id="goog-gt-votingHiddenPane" class="VIpgJd-yAWNEb-hvhgNd-aXYTce"><form id="goog-gt-votingForm" action="https://translate.googleapis.com/translate_voting?client=te_lib" method="post" target="votingFrame" class="VIpgJd-yAWNEb-hvhgNd-aXYTce"><input type="text" name="sl" id="goog-gt-votingInputSrcLang"><input type="text" name="tl" id="goog-gt-votingInputTrgLang"><input type="text" name="query" id="goog-gt-votingInputSrcText"><input type="text" name="gtrans" id="goog-gt-votingInputTrgText"><input type="text" name="vote" id="goog-gt-votingInputVote"></form><iframe name="votingFrame" frameborder="0"></iframe></div></div></div></body></html>
+------MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://chromium.googlesource.com/+static/base.css
+
+@charset "utf-8";
+
+@import url("//fonts.googleapis.com/css?family=Open+Sans:300,400,700&subset=latin,cyrillic-ext,greek-ext,cyrillic,greek,vietnamese,latin-ext");
+
+@import url("//fonts.googleapis.com/css?family=Source+Code+Pro");
+
+*, ::after, ::before { box-sizing: border-box; margin: 0px; padding: 0px; }
+
+h1, h2, h3, h4, h5, h6 { font-weight: normal; margin: 0.25em 0px 0.5em; }
+
+h1 { font-size: 2em; }
+
+h2 { font-size: 1.5em; }
+
+h3 { font-size: 1.3em; }
+
+h4, h5, h6 { font-size: 14px; font-style: italic; }
+
+ul, ol { list-style: none; }
+
+.u-sha1 { background-color: rgb(241, 242, 243); color: rgb(0, 0, 0); font-size: 13px; }
+
+.u-pre { font-size: 10pt; white-space: pre; }
+
+.u-lineNum { border-right: 1px solid rgb(241, 242, 243); color: rgb(102, 102, 102); display: inline-block; min-width: 3em; text-align: right; }
+
+.u-noSelect { user-select: none; }
+
+.u-monospace { font-family: "Source Code Pro", monospace; }
+
+.Site { background: rgb(255, 255, 255); color: rgb(0, 0, 0); display: flex; font: 14px / 1.54 "Open Sans", sans-serif; min-height: 100vh; -webkit-box-orient: vertical; -webkit-box-direction: normal; flex-direction: column; }
+
+.Site-header, .Site-footer { background: rgb(238, 238, 238); -webkit-box-flex: 0; flex: 0 0 auto; }
+
+.Site-header--withNavbar { background: rgb(255, 255, 255); }
+
+.Site-content { -webkit-box-flex: 1; flex: 1 0 auto; padding: 20px; }
+
+.Container { margin: 0px auto; max-width: 980px; }
+
+.Container--fullWidth { max-width: none; }
+
+.Header, .Footer { -webkit-box-align: center; align-items: center; display: flex; padding: 20px; }
+
+.Site-header--withNavbar .Header { max-width: 1020px; margin: 0px auto; padding: 10px 20px; }
+
+.Header-title, .Header-image { display: flex; -webkit-box-flex: 1; flex: 1 1 0%; }
+
+.Header-anchor { color: rgb(102, 102, 102); font-size: 32px; font-weight: 300; text-decoration: none; }
+
+.Header-anchorLogo { display: inline-block; margin-right: 10px; vertical-align: middle; }
+
+.Header-nav { background: rgb(238, 238, 238); padding: 15px 0px; }
+
+.Header-menu { display: flex; -webkit-box-pack: end; justify-content: flex-end; }
+
+.Header-menuItem { color: rgb(0, 0, 238); display: inline-block; margin-left: 15px; }
+
+.Header-menuItem--noAction { color: inherit; }
+
+.Breadcrumbs { font-size: 18px; margin-bottom: 20px; }
+
+.Breadcrumbs-crumb { color: rgb(0, 0, 238); }
+
+.Breadcrumbs-crumb:last-child { color: rgb(0, 0, 0); font-weight: bold; }
+
+.Footer { color: rgb(102, 102, 102); }
+
+.Footer-poweredBy { -webkit-box-flex: 1; flex: 1 1 0%; }
+
+.Footer-formats, .Footer-links { display: flex; -webkit-box-pack: end; justify-content: flex-end; }
+
+.Footer-formatsItem { display: inline-block; }
+
+.Footer-formatsItem:first-child { margin-right: 20px; }
+
+.Footer-link { display: inline-block; margin-left: 10px; }
+
+.RepoList-item { display: flex; left: -10px; padding: 5px 0px 5px 10px; position: relative; white-space: nowrap; width: calc(100% + 20px); }
+
+.RepoList-item:link, .RepoList-item:visited { text-decoration: none; }
+
+.RepoList-item:hover { background: rgb(238, 238, 238); }
+
+.RepoList-item--header { font-weight: bold; margin: 0px; }
+
+.RepoList-item--header:hover { background: rgb(255, 255, 255); }
+
+.RepoList-itemName, .RepoList-itemDescription { display: inline-block; }
+
+.RepoList-itemName { margin-right: 10px; min-width: 25%; text-decoration: underline; }
+
+.RepoList-item--header > .RepoList-itemName { text-decoration: none; }
+
+.RepoList-itemDescription { color: rgb(0, 0, 0); -webkit-box-flex: 1; flex: 1 1 0%; overflow: hidden; text-overflow: ellipsis; }
+
+.RepoDescription { margin: 10px 0px; }
+
+.RepoMirroredFrom { margin: 10px 0px; color: rgb(102, 102, 102); }
+
+.CloneRepo { background: rgb(238, 238, 238); margin-bottom: 20px; padding: 10px; }
+
+.CloneRepo-title { margin-bottom: 2px; }
+
+.CloneRepo-command { border: 1px solid rgb(204, 204, 204); border-radius: 4px; display: block; font-size: inherit; padding: 10px; width: 100%; }
+
+.RepoShortlog { display: flex; }
+
+.RepoShortlog-refs { width: 20%; -webkit-box-flex: 0 !important; flex: 0 0 auto !important; }
+
+.RepoShortlog-refs > .RefList:first-child { margin: 0px; }
+
+.RepoShortlog-log { -webkit-box-flex: 1; flex: 1 1 0%; width: 80%; }
+
+.RepoIndexDoc { border-top: 1px solid rgb(221, 221, 221); margin-top: 20px; padding-top: 5px; }
+
+.EmptyRepo-description { font-size: 14px; font-style: italic; }
+
+@media (max-width: 550px) {
+  .RepoShortlog { -webkit-box-orient: vertical; -webkit-box-direction: normal; flex-direction: column; }
+  .RepoShortlog-refs { width: auto; border-bottom: 1px solid rgb(221, 221, 221); margin-bottom: 20px; padding-bottom: 20px; }
+  .RepoShortlog-refs > .RefList:last-child { margin-bottom: 0px; }
+  .RepoShortlog-log { width: auto; }
+}
+
+.RefList { margin: 15px 0px; }
+
+.RefList-title { margin: 0px; }
+
+.RefList-items { overflow-wrap: break-word; }
+
+.RefList-item { padding: 2px 0px; }
+
+@media (max-width: 550px) {
+  .RefList--responsive .RefList-item { display: inline-block; margin-right: 6px; }
+}
+
+.LogNav { margin: 10px 0px; text-align: center; }
+
+.CommitLog-item { padding: 2px 0px; }
+
+.CommitLog-item--oneline:hover { background: rgb(238, 238, 238); }
+
+.CommitLog-item--full { margin-bottom: 20px; }
+
+.CommitLog-item--empty { padding: 10px 0px; text-align: center; }
+
+.CommitLog-sha1 { border-radius: 3px; display: inline-block; margin-right: 3px; padding: 2px 4px; text-align: center; }
+
+.CommitLog-time { color: rgb(102, 102, 102); }
+
+.CommitLog-branchLabel { color: rgb(221, 75, 57); }
+
+.CommitLog-tagLabel { color: rgb(0, 153, 51); }
+
+.CommitLog-rename { font-size: 0.9em; display: block; padding-left: 5px; }
+
+.Metadata { margin-bottom: 15px; }
+
+.Metadata-title { font-weight: bold; padding-right: 10px; text-align: right; }
+
+.MetadataMessage { background-color: rgb(250, 250, 250); border: 1px solid rgb(204, 204, 204); color: rgb(0, 0, 0); margin: 0px; padding: 12px; white-space: pre-wrap; }
+
+.DiffTree { margin: 10px 0px 5px; }
+
+.DiffTree-action { margin-left: 0.5em; }
+
+.DiffTree-action--add { color: rgb(0, 102, 0); }
+
+.DiffTree-action--delete { color: rgb(102, 0, 0); }
+
+.DiffTree-action--rename, .DiffTree-action--copy { color: rgb(0, 0, 102); }
+
+.TreeDetail-sha1, .BlobSha1 { margin: 10px 0px; padding: 5px 10px; }
+
+.FileList { margin-left: 25px; }
+
+.FileList-item { padding: 1px 0px; position: relative; }
+
+.FileList-item:hover { background: rgb(238, 238, 238); }
+
+.FileList-item::before { left: -22px; position: absolute; top: 4px; }
+
+.FileList-itemLink { display: block; }
+
+.FileList-item--gitTree::before { content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAN1wAADdcBQiibeAAAAb5JREFUOMulkr1KA0EQgGdvTwwnYmER0gQsrFKmSy+pLESw9Qm0F/ICNnba+h6iEOuAEWslKJKTOyJJvIT72d1xZuOFC0giOLA77O7Mt/PnNptN+I+49Xr9GhH3f3mb0v1ht9vtLAUYYw5ItkgDL3KyD8PhcLvdbl/WarXT3DjLMnAcR/f7/YfxeKwtgC5RKQVhGILWeg4hQ6hUKjWyucmhLFEUuWR3QYBWAZABQ9i5CCmXy16pVALP80BKaaG+70MQBLvzFMjRKKXh8j6FSYKF7ITdEWLa4/ktokN74wiqjSMpnVcbQZqmEJHz+ckeCPFjWKwULpyspAqhdXVXdcnZcPjsIgn+2BsVA8jVYuWlgJ3yBj0icgq2uoK+lg4t+ZvLomSKamSQ4AI5BcMADtMhyNoSgNIISUaFNtwlazcDcBc4gjjVwCWid2usCWroYEhnaqbzFJLUzAHIXRDChXCcQP8zhkSZ5eNLgHAUzwDcRu4CoIRn/wsGUQIIy4Vr9TH6SYFCNzw4nALn5627K4vIttOUOwfa5YnrDYzt/9OLv9I5l8kk5hZ3XLO20b7tbR7zHLy/BX8G0IeBEM7ZN1NGIaFUaKLgAAAAAElFTkSuQmCC"); }
+
+.FileList-item--symlink::before { content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAABZUlEQVQ4y2NgIAL4zWL7D8TGDOQCqAEg7Ey2Aes+58AMcSSkmB2I3YB4HhCfh9kOMoCgIUAJMyDe2D+b58jKe553133M+r/uU/b/zV+L/y97n/i/+JIYbkOAAl5AfGLNTde/69+n/1/4MuD/gtsqKBhkALIh5S0M1jDN2kC8a+UNt/8b36f+X3JP5f/0u1pwjeuvS8E1g3DpZQm4ITAD5s09ZPBq49uE/0vvq4E1gPCJC5z/yy+IoGgG4a5HJqjeCJ3Pc2vjy+T/ux4Y/j99Rfz/7GtK/xfeUkbBN+8pY9cMAkFzuT5uepPy/+w1lf+TF3L/Q4p3OD5zRQ67Zlg873vk9n/mMlaQ5EcgLgZiA2R5nJphCjbfNP8LVeCBJyUa40xpO+5afQXS/8jKC0DJg+uPKx+bOJf1HDYXEJPW46JW8LcduKYzbdZMph4gn4ccQxSAOAuIo4FYdvsKFpYdK1iYCekDACq5JXDHGJhDAAAAAElFTkSuQmCC"); }
+
+.FileList-item--regularFile::before { content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAtElEQVQ4ja2TSw7CIBRFu0r3wyIYsAMHDl1CC92IDqC0wAbQi4Fo5VOMJGcAyT33vQEDY+xCCPGdnIZ48NB7kPkSLMvipZQBpVQC70Br7Y0xZQGC4zj6aZoCnPMPhBBtwb41NoN1XesCBHPNhyfI7fziFu6HJti3IgS0vrcFuZ3Btm2JpmC/M5jnOdEU5JoRstYmigKES80x7JyrC+IE7+1xAoSrgp//AqX02vsbn5nz8K/zAP9CzjbgFoHjAAAAAElFTkSuQmCC"); }
+
+.FileList-item--executableFile::before { content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA7ADsAOwdIxY2AAAACXBIWXMAAAsTAAALEwEAmpwYAAABOklEQVQ4T5WTTYqDQBBGPdKcZnIJdy7EVRByBQPi0iwHAlGT0YBHcG82kkV2VnffoKar7FYzIQYLPtqffq+rEJ04jn/CMMSV+XZs0YO1RcyLoO/7MdAD9gAI8wiK+CyYA0IDFABhrmFBAHNYbwYTIxFyWN8KwAiEmIEaknqVUposCoBBGE8cIGUipUKp5IJAzOe2JxI0pG1b3Gw2+Hg8FjoQzy0rLVAavt0GuGkaXrfb7avAzs0CNcHtDD4ejwzTve/7X/9GGFqn2QmkDmzbBJ9OJ8yyDNM0Rdd1J8mzgDqQPDNJLFwUBZ7PZ7xcLizwPI9gfj+NYAX2k+kx7vc7byrLEquqwuv1ivv9HpMk4ec6Uwfvqus63lzXNeZ5zoIRpoqiKP/09wVBwNDhcOB1t9v9OmuLTnw62dQfVIHPYx/I/0kAAAAASUVORK5CYII="); }
+
+.FileList-item--gitlink::before { content: url("data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAA3XAAAN1wFCKJt4AAABO0lEQVQ4T7WT3U6EMBCF92m99yGMZuODGL01eueyXqjvwc+WUlooUPkfZxq3sQEvJLHJSQvlfDOnDbub/dUFCrZof3t9uaPF1kFeBwjD8E+apukfAVEUQRzHkCQJJKfEznES43tUGP0OIOMheIGn50e4f7izCo4H4GkKDEXPBIviCIZh8AFkfv94g5Qx4Jw7AOn4Grh1iqATdrUAEJmxFLIsgzzPQSnpQc4SIkMIh7ZtfQCjys6soNQlVFW1AEgpQWQCjDE+gHIKIaxZo7mu69UOiqJwRXxAxnFDQllS5XUzSeO+kmoJoOzUni41NE1tM9JBTdMII85d14FpjI2lihUA9wCNA8zzDOM4WkBjvgFqrQO8ulzmNgLl/8SPyTT0WL3vLLBGsNZ6HUBV1tT3vROd/Fk/AZt/Z/J+AUN8ayghXmezAAAAAElFTkSuQmCC"); }
+
+.FileContents { border-collapse: collapse; border-spacing: 0px; margin: 10px 0px; }
+
+.FileContents-line { border: none; }
+
+.FileContents-lineNum { padding-right: 10px; width: 1%; }
+
+.FileContents-lineNum::before { color: rgb(170, 170, 170); content: attr(data-line-number); cursor: pointer; }
+
+.FileContents-lineContents { line-height: 1.3em; min-height: 1em; padding-left: 10px; }
+
+.FileContents-lineContents:target { background: rgb(207, 216, 220); }
+
+.InlineReadme { border-top: 1px solid rgb(221, 221, 221); margin: 10px 0px; padding: 7px 0px; }
+
+.InlineReadme-path { color: rgb(102, 102, 102); }
+
+.Blame { border-collapse: collapse; font-size: 8pt; margin: 0px auto; }
+
+.Blame-region--bg1 { background: rgb(255, 255, 255); }
+
+.Blame-region--bg2 { background: rgb(241, 242, 243); }
+
+.Blame-sha1, .Blame-author, .Blame-time, .Blame-regionLink { font-size: 8pt; padding: 0px 3px; white-space: nowrap; }
+
+.Blame-regionLink { text-align: right; }
+
+.Blame-lineNum .u-lineNum { padding: 0px 8px; text-align: right; }
+
+.Blame-lineNum:hover { text-decoration: underline; }
+
+.Blame-lineContent { font-size: 9pt; line-height: 1.3em; padding: 0px 8px; }
+
+.Diff { margin: 10px 0px; }
+
+.Diff-fileIndex { color: rgb(68, 68, 68); font-weight: bold; }
+
+.Diff-unified { border-bottom: 1px solid rgb(221, 221, 221); border-top: 1px solid rgb(221, 221, 221); padding: 10px 0px; }
+
+.Diff-hunk { color: rgb(0, 0, 204); }
+
+.Diff-delete { color: rgb(204, 0, 0); }
+
+.Diff-insert { color: rgb(0, 136, 0); }
+
+sentinel { }
+------MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://fonts.googleapis.com/css?family=Open+Sans:300,400,700&subset=latin,cyrillic-ext,greek-ext,cyrillic,greek,vietnamese,latin-ext
+
+@charset "utf-8";
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 300; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSKmu1aB.woff2") format("woff2"); unicode-range: U+460-52F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 300; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSumu1aB.woff2") format("woff2"); unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 300; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSOmu1aB.woff2") format("woff2"); unicode-range: U+1F00-1FFF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 300; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSymu1aB.woff2") format("woff2"); unicode-range: U+370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 300; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS2mu1aB.woff2") format("woff2"); unicode-range: U+590-5FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 300; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTVOmu1aB.woff2") format("woff2"); unicode-range: U+302-303, U+305, U+307-308, U+330, U+391-3A1, U+3A3-3A9, U+3B1-3C9, U+3D1, U+3D5-3D6, U+3F0-3F1, U+3F4-3F5, U+2034-2037, U+2057, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2102, U+210A-210E, U+2110-2112, U+2115, U+2119-211D, U+2124, U+2128, U+212C-212D, U+212F-2131, U+2133-2138, U+213C-2140, U+2145-2149, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B6, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 300; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTUGmu1aB.woff2") format("woff2"); unicode-range: U+1-C, U+E-1F, U+7F-9F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8B1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA88, U+1FA90-1FABD, U+1FABF-1FAC5, U+1FACE-1FADB, U+1FAE0-1FAE8, U+1FAF0-1FAF8, U+1FB00-1FBFF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 300; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSCmu1aB.woff2") format("woff2"); unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 300; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSGmu1aB.woff2") format("woff2"); unicode-range: U+100-2AF, U+304, U+308, U+329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 300; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2") format("woff2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSKmu1aB.woff2") format("woff2"); unicode-range: U+460-52F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSumu1aB.woff2") format("woff2"); unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSOmu1aB.woff2") format("woff2"); unicode-range: U+1F00-1FFF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSymu1aB.woff2") format("woff2"); unicode-range: U+370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS2mu1aB.woff2") format("woff2"); unicode-range: U+590-5FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTVOmu1aB.woff2") format("woff2"); unicode-range: U+302-303, U+305, U+307-308, U+330, U+391-3A1, U+3A3-3A9, U+3B1-3C9, U+3D1, U+3D5-3D6, U+3F0-3F1, U+3F4-3F5, U+2034-2037, U+2057, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2102, U+210A-210E, U+2110-2112, U+2115, U+2119-211D, U+2124, U+2128, U+212C-212D, U+212F-2131, U+2133-2138, U+213C-2140, U+2145-2149, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B6, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTUGmu1aB.woff2") format("woff2"); unicode-range: U+1-C, U+E-1F, U+7F-9F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8B1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA88, U+1FA90-1FABD, U+1FABF-1FAC5, U+1FACE-1FADB, U+1FAE0-1FAE8, U+1FAF0-1FAF8, U+1FB00-1FBFF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSCmu1aB.woff2") format("woff2"); unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSGmu1aB.woff2") format("woff2"); unicode-range: U+100-2AF, U+304, U+308, U+329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 400; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2") format("woff2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 700; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSKmu1aB.woff2") format("woff2"); unicode-range: U+460-52F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 700; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSumu1aB.woff2") format("woff2"); unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 700; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSOmu1aB.woff2") format("woff2"); unicode-range: U+1F00-1FFF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 700; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSymu1aB.woff2") format("woff2"); unicode-range: U+370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 700; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS2mu1aB.woff2") format("woff2"); unicode-range: U+590-5FF, U+200C-2010, U+20AA, U+25CC, U+FB1D-FB4F; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 700; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTVOmu1aB.woff2") format("woff2"); unicode-range: U+302-303, U+305, U+307-308, U+330, U+391-3A1, U+3A3-3A9, U+3B1-3C9, U+3D1, U+3D5-3D6, U+3F0-3F1, U+3F4-3F5, U+2034-2037, U+2057, U+20D0-20DC, U+20E1, U+20E5-20EF, U+2102, U+210A-210E, U+2110-2112, U+2115, U+2119-211D, U+2124, U+2128, U+212C-212D, U+212F-2131, U+2133-2138, U+213C-2140, U+2145-2149, U+2190, U+2192, U+2194-21AE, U+21B0-21E5, U+21F1-21F2, U+21F4-2211, U+2213-2214, U+2216-22FF, U+2308-230B, U+2310, U+2319, U+231C-2321, U+2336-237A, U+237C, U+2395, U+239B-23B6, U+23D0, U+23DC-23E1, U+2474-2475, U+25AF, U+25B3, U+25B7, U+25BD, U+25C1, U+25CA, U+25CC, U+25FB, U+266D-266F, U+27C0-27FF, U+2900-2AFF, U+2B0E-2B11, U+2B30-2B4C, U+2BFE, U+FF5B, U+FF5D, U+1D400-1D7FF, U+1EE00-1EEFF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 700; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTUGmu1aB.woff2") format("woff2"); unicode-range: U+1-C, U+E-1F, U+7F-9F, U+20DD-20E0, U+20E2-20E4, U+2150-218F, U+2190, U+2192, U+2194-2199, U+21AF, U+21E6-21F0, U+21F3, U+2218-2219, U+2299, U+22C4-22C6, U+2300-243F, U+2440-244A, U+2460-24FF, U+25A0-27BF, U+2800-28FF, U+2921-2922, U+2981, U+29BF, U+29EB, U+2B00-2BFF, U+4DC0-4DFF, U+FFF9-FFFB, U+10140-1018E, U+10190-1019C, U+101A0, U+101D0-101FD, U+102E0-102FB, U+10E60-10E7E, U+1D2C0-1D2D3, U+1D2E0-1D37F, U+1F000-1F0FF, U+1F100-1F1AD, U+1F1E6-1F1FF, U+1F30D-1F30F, U+1F315, U+1F31C, U+1F31E, U+1F320-1F32C, U+1F336, U+1F378, U+1F37D, U+1F382, U+1F393-1F39F, U+1F3A7-1F3A8, U+1F3AC-1F3AF, U+1F3C2, U+1F3C4-1F3C6, U+1F3CA-1F3CE, U+1F3D4-1F3E0, U+1F3ED, U+1F3F1-1F3F3, U+1F3F5-1F3F7, U+1F408, U+1F415, U+1F41F, U+1F426, U+1F43F, U+1F441-1F442, U+1F444, U+1F446-1F449, U+1F44C-1F44E, U+1F453, U+1F46A, U+1F47D, U+1F4A3, U+1F4B0, U+1F4B3, U+1F4B9, U+1F4BB, U+1F4BF, U+1F4C8-1F4CB, U+1F4D6, U+1F4DA, U+1F4DF, U+1F4E3-1F4E6, U+1F4EA-1F4ED, U+1F4F7, U+1F4F9-1F4FB, U+1F4FD-1F4FE, U+1F503, U+1F507-1F50B, U+1F50D, U+1F512-1F513, U+1F53E-1F54A, U+1F54F-1F5FA, U+1F610, U+1F650-1F67F, U+1F687, U+1F68D, U+1F691, U+1F694, U+1F698, U+1F6AD, U+1F6B2, U+1F6B9-1F6BA, U+1F6BC, U+1F6C6-1F6CF, U+1F6D3-1F6D7, U+1F6E0-1F6EA, U+1F6F0-1F6F3, U+1F6F7-1F6FC, U+1F700-1F7FF, U+1F800-1F80B, U+1F810-1F847, U+1F850-1F859, U+1F860-1F887, U+1F890-1F8AD, U+1F8B0-1F8B1, U+1F900-1F90B, U+1F93B, U+1F946, U+1F984, U+1F996, U+1F9E9, U+1FA00-1FA6F, U+1FA70-1FA7C, U+1FA80-1FA88, U+1FA90-1FABD, U+1FABF-1FAC5, U+1FACE-1FADB, U+1FAE0-1FAE8, U+1FAF0-1FAF8, U+1FB00-1FBFF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 700; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSCmu1aB.woff2") format("woff2"); unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 700; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTSGmu1aB.woff2") format("woff2"); unicode-range: U+100-2AF, U+304, U+308, U+329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: "Open Sans"; font-style: normal; font-weight: 700; font-stretch: 100%; src: url("https://fonts.gstatic.com/s/opensans/v40/memvYaGs126MiZpBA-UvWbX2vVnXBbObj2OVTS-muw.woff2") format("woff2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+------MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://fonts.googleapis.com/css?family=Source+Code+Pro
+
+@charset "utf-8";
+
+@font-face { font-family: "Source Code Pro"; font-style: normal; font-weight: 400; src: url("https://fonts.gstatic.com/s/sourcecodepro/v23/HI_diYsKILxRpg3hIP6sJ7fM7PqPMcMnZFqUwX28DMyQtMRrTEUc.woff2") format("woff2"); unicode-range: U+460-52F, U+1C80-1C88, U+20B4, U+2DE0-2DFF, U+A640-A69F, U+FE2E-FE2F; }
+
+@font-face { font-family: "Source Code Pro"; font-style: normal; font-weight: 400; src: url("https://fonts.gstatic.com/s/sourcecodepro/v23/HI_diYsKILxRpg3hIP6sJ7fM7PqPMcMnZFqUwX28DMyQtM1rTEUc.woff2") format("woff2"); unicode-range: U+301, U+400-45F, U+490-491, U+4B0-4B1, U+2116; }
+
+@font-face { font-family: "Source Code Pro"; font-style: normal; font-weight: 400; src: url("https://fonts.gstatic.com/s/sourcecodepro/v23/HI_diYsKILxRpg3hIP6sJ7fM7PqPMcMnZFqUwX28DMyQtMVrTEUc.woff2") format("woff2"); unicode-range: U+1F00-1FFF; }
+
+@font-face { font-family: "Source Code Pro"; font-style: normal; font-weight: 400; src: url("https://fonts.gstatic.com/s/sourcecodepro/v23/HI_diYsKILxRpg3hIP6sJ7fM7PqPMcMnZFqUwX28DMyQtMprTEUc.woff2") format("woff2"); unicode-range: U+370-377, U+37A-37F, U+384-38A, U+38C, U+38E-3A1, U+3A3-3FF; }
+
+@font-face { font-family: "Source Code Pro"; font-style: normal; font-weight: 400; src: url("https://fonts.gstatic.com/s/sourcecodepro/v23/HI_diYsKILxRpg3hIP6sJ7fM7PqPMcMnZFqUwX28DMyQtMZrTEUc.woff2") format("woff2"); unicode-range: U+102-103, U+110-111, U+128-129, U+168-169, U+1A0-1A1, U+1AF-1B0, U+300-301, U+303-304, U+308-309, U+323, U+329, U+1EA0-1EF9, U+20AB; }
+
+@font-face { font-family: "Source Code Pro"; font-style: normal; font-weight: 400; src: url("https://fonts.gstatic.com/s/sourcecodepro/v23/HI_diYsKILxRpg3hIP6sJ7fM7PqPMcMnZFqUwX28DMyQtMdrTEUc.woff2") format("woff2"); unicode-range: U+100-2AF, U+304, U+308, U+329, U+1E00-1E9F, U+1EF2-1EFF, U+2020, U+20A0-20AB, U+20AD-20C0, U+2113, U+2C60-2C7F, U+A720-A7FF; }
+
+@font-face { font-family: "Source Code Pro"; font-style: normal; font-weight: 400; src: url("https://fonts.gstatic.com/s/sourcecodepro/v23/HI_diYsKILxRpg3hIP6sJ7fM7PqPMcMnZFqUwX28DMyQtMlrTA.woff2") format("woff2"); unicode-range: U+0-FF, U+131, U+152-153, U+2BB-2BC, U+2C6, U+2DA, U+2DC, U+304, U+308, U+329, U+2000-206F, U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+------MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://chromium.googlesource.com/+static/doc.css
+
+@charset "utf-8";
+
+.Site-Content--markdown { padding-top: 0px; }
+
+.Header-nav ul { max-width: 1020px; margin: 0px auto; padding: 0px 20px; }
+
+.Header-nav li { display: inline-block; margin-right: 15px; }
+
+.doc h1, .doc h2, .doc h3, .doc h4, .doc h5, .doc h6 { font-weight: normal; margin: 1.236em 0px 0.618em; }
+
+.doc.RepoIndexDoc h1 { margin-top: 0.25em; }
+
+.doc h1 { font-size: 2em; }
+
+.doc h2 { font-size: 1.5em; }
+
+.doc h3 { font-size: 1.3em; }
+
+.doc h4 { font-size: 1.3em; font-weight: lighter; font-style: italic; }
+
+.doc h5 { font-size: 16px; font-weight: lighter; font-style: italic; }
+
+.doc h6 { font-size: 14px; font-style: italic; }
+
+.doc hr { border-right: none; border-bottom: none; border-left: none; border-image: initial; border-top: 1px solid rgb(170, 170, 170); display: block; margin-top: 25px; }
+
+.doc a { text-decoration: none; }
+
+.doc a:link { color: rgb(36, 93, 193); }
+
+.doc a:visited { color: rgb(119, 89, 174); }
+
+.doc a:hover { text-decoration: underline; }
+
+.doc a.h { display: inline-block; font-weight: normal; width: 1.5em; margin-left: -1.5em; margin-top: -1em; margin-bottom: -1em; }
+
+.doc a.h:link, .doc a.h:visited { color: rgb(68, 68, 68); }
+
+.doc a.h:focus { outline: none; }
+
+.doc a.h:hover { text-decoration: none; }
+
+.doc a.h span { display: inline-block; width: 1.5em; }
+
+.doc h1:hover a.h span::before, .doc h2:hover a.h span::before, .doc h3:hover a.h span::before, .doc h4:hover a.h span::before, .doc h5:hover a.h span::before, .doc h6:hover a.h span::before { content: "#"; font-weight: normal; color: rgb(170, 170, 170); }
+
+.doc h1:hover a:hover.h span::before, .doc h2:hover a:hover.h span::before, .doc h3:hover a:hover.h span::before, .doc h4:hover a:hover.h span::before, .doc h5:hover a:hover.h span::before, .doc h6:hover a:hover.h span::before { text-decoration: underline; }
+
+.doc h1:hover a:visited.h span::before, .doc h2:hover a:visited.h span::before, .doc h3:hover a:visited.h span::before, .doc h4:hover a:visited.h span::before, .doc h5:hover a:visited.h span::before, .doc h6:hover a:visited.h span::before { color: rgb(170, 170, 170); }
+
+.doc ul, .doc ol { margin: 10px 10px 10px 30px; padding: 0px; }
+
+.doc ul { list-style-type: disc; }
+
+.doc ol { list-style-type: decimal; }
+
+.doc img { border: 0px; max-width: 100%; }
+
+.doc iframe { min-width: 100px; min-height: 30px; }
+
+iframe.noborder { border: 0px; }
+
+.doc em { font-weight: normal; font-style: italic; }
+
+.doc strong { font-weight: bold; color: inherit; }
+
+.doc p { margin: 10px 0px; }
+
+.doc blockquote { background-color: rgb(255, 253, 231); border-left: 2px solid rgb(250, 183, 0); padding: 2px 10px; }
+
+.doc pre { padding: 12px; font-size: 10pt; background-color: rgb(250, 250, 250); border: 1px solid rgb(204, 204, 204); overflow-x: auto; }
+
+.doc code { padding: 2px 4px; background-color: rgb(245, 245, 245); border: transparent; border-radius: 4px; }
+
+.doc .code { font-family: "Source Code Pro", monospace; }
+
+.doc dl dt { margin-top: 1em; }
+
+.doc table { border-collapse: collapse; border-spacing: 0px; }
+
+.doc th { text-align: center; }
+
+.doc th, .doc td { border: 1px solid rgb(238, 238, 238); padding: 4px 12px; vertical-align: top; }
+
+.doc th { background-color: rgb(245, 245, 245); }
+
+.toc { margin-top: 30px; }
+
+.toc-aux { background: rgb(249, 249, 249); border: 1px solid rgb(242, 242, 242); }
+
+.toc h2 { margin: 0px 0px 5px; }
+
+.toc ul { margin: 10px 10px 10px 30px; }
+
+.toc ul li { margin-left: 0px; list-style: disc; }
+
+.toc ul ul { margin-top: 0px; margin-bottom: 0px; }
+
+.toc ul ul li { list-style: circle; }
+
+.note, .promo, .aside { border: 1px solid; border-radius: 4px; margin: 10px 0px; padding: 10px; }
+
+.note { background: rgb(255, 251, 228); border-color: rgb(248, 246, 230); }
+
+.promo { background: rgb(246, 249, 255); border-color: rgb(239, 242, 249); }
+
+.aside { background: rgb(249, 249, 249); border-color: rgb(242, 242, 242); }
+
+.note :first-child, .promo :first-child, .aside :first-child { margin-top: 0px; }
+
+.note p:last-child, .promo p:last-child, .aside p:last-child { margin-bottom: 0px; }
+
+.cols { margin: 0px -1.533%; width: 103.067%; }
+
+.col-1, .col-2, .col-3, .col-4, .col-5, .col-6, .col-7, .col-8, .col-9, .col-10, .col-11, .col-12 { display: inline-block; margin: 0px 1.488% 20px; vertical-align: top; }
+
+.cols h1, .cols h2, .cols h3, .cols h4, .cols h5, .cols h6 { margin: 0.67em 0px; }
+
+.col-1 { width: 5.357%; }
+
+.col-2 { width: 13.69%; }
+
+.col-3 { width: 22.024%; }
+
+.col-4 { width: 30.357%; }
+
+.col-5 { width: 38.69%; }
+
+.col-6 { width: 47.024%; }
+
+.col-7 { width: 55.357%; }
+
+.col-8 { width: 63.69%; }
+
+.col-9 { width: 72.024%; }
+
+.col-10 { width: 80.357%; }
+
+.col-11 { width: 88.69%; }
+
+.col-12 { width: 97.024%; }
+
+.cols hr { width: 80%; }
+
+sentinel { }
+------MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://chromium.googlesource.com/+static/prettify/prettify.css
+
+@charset "utf-8";
+
+.str { color: rgb(0, 136, 0); }
+
+.kwd { color: rgb(0, 0, 136); }
+
+.com { color: rgb(136, 0, 0); }
+
+.typ { color: rgb(102, 0, 102); }
+
+.lit { color: rgb(0, 102, 102); }
+
+.pun, .opn, .clo { color: rgb(102, 102, 0); }
+
+.pln { color: rgb(0, 0, 0); }
+
+.tag { color: rgb(0, 0, 136); }
+
+.atn { color: rgb(102, 0, 102); }
+
+.atv { color: rgb(0, 136, 0); }
+
+.dec { color: rgb(102, 0, 102); }
+
+@media print {
+  .str { color: rgb(0, 102, 0); }
+  .kwd { color: rgb(0, 0, 102); font-weight: bold; }
+  .com { color: rgb(102, 0, 0); font-style: italic; }
+  .typ { color: rgb(68, 0, 68); font-weight: bold; }
+  .lit { color: rgb(0, 68, 68); }
+  .pun, .opn, .clo { color: rgb(68, 68, 0); }
+  .pln { color: rgb(0, 0, 0); }
+  .tag { color: rgb(0, 0, 102); font-weight: bold; }
+  .atn { color: rgb(68, 0, 68); }
+  .atv { color: rgb(0, 102, 0); }
+}
+
+pre.prettyprint { padding: 2px; border: 1px solid rgb(136, 136, 136); }
+
+ol.linenums { margin-top: 0px; margin-bottom: 0px; }
+
+li.L0, li.L1, li.L2, li.L3, li.L5, li.L6, li.L7, li.L8 { list-style-type: none; }
+
+li.L1, li.L3, li.L5, li.L7, li.L9 { background: rgb(238, 238, 238); }
+------MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52----
+Content-Type: text/css
+Content-Transfer-Encoding: binary
+Content-Location: https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.26tY-h6gH9w.L.W.O/am=AAM/d=0/rs=AN8SPfrUh4eQMB1I5qTj-4-oeXAO15kIQQ/m=el_main_css
+
+@charset "utf-8";
+
+.VIpgJd-ZVi9od-ORHb-OEVmcd { left: 0px; top: 0px; height: 39px; width: 100%; z-index: 10000001; position: fixed; border-top: none; border-right: none; border-left: none; border-image: initial; border-bottom: 1px solid rgb(107, 144, 218); margin: 0px; box-shadow: rgb(153, 153, 153) 0px 0px 8px 1px; }
+
+.VIpgJd-ZVi9od-xl07Ob-OEVmcd { z-index: 10000002; border: none; position: fixed; box-shadow: rgb(153, 153, 153) 0px 3px 8px 2px; }
+
+.VIpgJd-ZVi9od-SmfZ-OEVmcd { z-index: 10000000; border: none; margin: 0px; }
+
+.goog-te-gadget { font-family: arial; font-size: 11px; color: rgb(102, 102, 102); white-space: nowrap; }
+
+.goog-te-gadget img { vertical-align: middle; border: none; }
+
+.goog-te-gadget-simple { background-color: rgb(255, 255, 255); border-width: 1px; border-style: solid; border-color: rgb(155, 155, 155) rgb(213, 213, 213) rgb(232, 232, 232); font-size: 10pt; display: inline-block; padding-top: 1px; padding-bottom: 2px; cursor: pointer; }
+
+.goog-te-gadget-icon { margin-left: 2px; margin-right: 2px; width: 19px; height: 19px; border: none; vertical-align: middle; }
+
+.goog-te-combo { margin-left: 4px; margin-right: 4px; vertical-align: baseline; }
+
+.goog-te-gadget .goog-te-combo { margin: 4px 0px; }
+
+.VIpgJd-ZVi9od-l4eHX-hSRGPd, .VIpgJd-ZVi9od-l4eHX-hSRGPd:link, .VIpgJd-ZVi9od-l4eHX-hSRGPd:visited, .VIpgJd-ZVi9od-l4eHX-hSRGPd:hover, .VIpgJd-ZVi9od-l4eHX-hSRGPd:active { font-size: 12px; font-weight: bold; color: rgb(68, 68, 68); text-decoration: none; }
+
+.VIpgJd-ZVi9od-ORHb .VIpgJd-ZVi9od-l4eHX-hSRGPd, .VIpgJd-ZVi9od-TvD9Pc-hSRGPd { display: block; margin: 0px 10px; }
+
+.VIpgJd-ZVi9od-ORHb .VIpgJd-ZVi9od-l4eHX-hSRGPd { padding-top: 2px; padding-left: 4px; }
+
+.goog-te-combo, .VIpgJd-ZVi9od-ORHb *, .VIpgJd-ZVi9od-SmfZ *, .VIpgJd-ZVi9od-xl07Ob *, .VIpgJd-ZVi9od-vH1Gmf *, .VIpgJd-ZVi9od-l9xktf * { font-family: arial; font-size: 10pt; }
+
+.VIpgJd-ZVi9od-ORHb { margin: 0px; background-color: rgb(228, 239, 251); overflow: hidden; }
+
+.VIpgJd-ZVi9od-ORHb img { border: none; }
+
+.VIpgJd-ZVi9od-ORHb-bN97Pc { color: rgb(0, 0, 0); }
+
+.VIpgJd-ZVi9od-ORHb-bN97Pc img { vertical-align: middle; }
+
+.VIpgJd-ZVi9od-ORHb-Tswv1b { color: rgb(102, 102, 102); vertical-align: top; margin-top: 0px; font-size: 7pt; }
+
+.VIpgJd-ZVi9od-ORHb-KE6vqe { width: 8px; }
+
+.VIpgJd-ZVi9od-LgbsSe { border-color: rgb(231, 231, 231); border-style: none solid solid none; border-width: 0px 1px 1px 0px; }
+
+.VIpgJd-ZVi9od-LgbsSe div { border-color: rgb(204, 204, 204) rgb(153, 153, 153) rgb(153, 153, 153) rgb(204, 204, 204); border-style: solid; border-width: 1px; height: 20px; }
+
+.VIpgJd-ZVi9od-LgbsSe button { background: transparent; border: none; cursor: pointer; height: 20px; overflow: hidden; margin: 0px; vertical-align: top; white-space: nowrap; }
+
+.VIpgJd-ZVi9od-LgbsSe button:active { background: none 0px 0px repeat scroll rgb(204, 204, 204); }
+
+.VIpgJd-ZVi9od-SmfZ { margin: 0px; background-color: rgb(255, 255, 255); white-space: nowrap; }
+
+.VIpgJd-ZVi9od-SmfZ-hSRGPd { text-decoration: none; font-weight: bold; font-size: 10pt; border: 1px outset rgb(136, 136, 136); padding: 6px 10px; white-space: nowrap; position: absolute; left: 0px; top: 0px; }
+
+.VIpgJd-ZVi9od-SmfZ-hSRGPd img { margin-left: 2px; margin-right: 2px; width: 19px; height: 19px; border: none; vertical-align: middle; }
+
+.VIpgJd-ZVi9od-SmfZ-hSRGPd span { text-decoration: underline; margin-left: 2px; margin-right: 2px; vertical-align: middle; }
+
+.goog-te-float-top .VIpgJd-ZVi9od-SmfZ-hSRGPd { padding: 2px; border-top-width: 0px; }
+
+.goog-te-float-bottom .VIpgJd-ZVi9od-SmfZ-hSRGPd { padding: 2px; border-bottom-width: 0px; }
+
+.VIpgJd-ZVi9od-xl07Ob-lTBxed { text-decoration: none; color: rgb(0, 0, 204); white-space: nowrap; margin-left: 4px; margin-right: 4px; }
+
+.VIpgJd-ZVi9od-xl07Ob-lTBxed span { text-decoration: underline; }
+
+.VIpgJd-ZVi9od-xl07Ob-lTBxed img { margin-left: 2px; margin-right: 2px; }
+
+.goog-te-gadget-simple .VIpgJd-ZVi9od-xl07Ob-lTBxed { color: rgb(0, 0, 0); }
+
+.goog-te-gadget-simple .VIpgJd-ZVi9od-xl07Ob-lTBxed span { text-decoration: none; }
+
+.VIpgJd-ZVi9od-xl07Ob { background-color: rgb(255, 255, 255); text-decoration: none; border: 2px solid rgb(195, 217, 255); overflow: hidden scroll; position: absolute; left: 0px; top: 0px; }
+
+.VIpgJd-ZVi9od-xl07Ob-ibnC6b { padding: 3px; text-decoration: none; }
+
+.VIpgJd-ZVi9od-xl07Ob-ibnC6b, .VIpgJd-ZVi9od-xl07Ob-ibnC6b:link { color: rgb(0, 0, 204); background: rgb(255, 255, 255); }
+
+.VIpgJd-ZVi9od-xl07Ob-ibnC6b:visited { color: rgb(85, 26, 139); }
+
+.VIpgJd-ZVi9od-xl07Ob-ibnC6b:hover { background: rgb(195, 217, 255); }
+
+.VIpgJd-ZVi9od-xl07Ob-ibnC6b:active { color: rgb(0, 0, 204); }
+
+.VIpgJd-ZVi9od-vH1Gmf { background-color: rgb(255, 255, 255); text-decoration: none; border: 1px solid rgb(107, 144, 218); overflow: hidden; padding: 4px; }
+
+.VIpgJd-ZVi9od-vH1Gmf-KrhPNb { width: 16px; }
+
+.VIpgJd-ZVi9od-vH1Gmf-hgDUwe { margin: 6px 0px; height: 1px; background-color: rgb(170, 170, 170); overflow: hidden; }
+
+.VIpgJd-ZVi9od-vH1Gmf-ibnC6b div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd div { padding: 4px; }
+
+.VIpgJd-ZVi9od-vH1Gmf-ibnC6b .uDEFge { display: none; }
+
+.VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd .uDEFge { }
+
+.VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd .fmcmS { padding-left: 4px; padding-right: 4px; }
+
+.VIpgJd-ZVi9od-vH1Gmf-ibnC6b, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd { text-decoration: none; }
+
+.VIpgJd-ZVi9od-vH1Gmf-ibnC6b div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:link div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:visited div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b:active div { color: rgb(0, 0, 204); background: rgb(255, 255, 255); }
+
+.VIpgJd-ZVi9od-vH1Gmf-ibnC6b:hover div { color: rgb(255, 255, 255); background: rgb(51, 102, 204); }
+
+.VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd:link div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd:visited div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd:hover div, .VIpgJd-ZVi9od-vH1Gmf-ibnC6b-gk6SMd:active div { color: rgb(0, 0, 0); font-weight: bold; }
+
+.VIpgJd-ZVi9od-l9xktf { background-color: rgb(255, 255, 255); overflow: hidden; padding: 8px; border: none; border-radius: 10px; }
+
+.VIpgJd-ZVi9od-l9xktf-OEVmcd { background-color: rgb(255, 255, 255); border: 1px solid rgb(107, 144, 218); box-shadow: rgb(153, 153, 153) 0px 3px 8px 2px; border-radius: 8px; }
+
+.VIpgJd-ZVi9od-l9xktf img { border: none; }
+
+.VIpgJd-ZVi9od-l9xktf-fmcmS { margin-top: 6px; }
+
+.VIpgJd-ZVi9od-l9xktf-VgwJlc { margin-top: 6px; white-space: nowrap; }
+
+.VIpgJd-ZVi9od-l9xktf-VgwJlc * { vertical-align: middle; }
+
+.VIpgJd-ZVi9od-l9xktf-VgwJlc .DUGJie { background-image: url("https://www&google.com/images/zippy_minus_sm.gif"); }
+
+.VIpgJd-ZVi9od-l9xktf-VgwJlc .TdyTDe { background-image: url("https://www&google.com/images/zippy_plus_sm.gif"); }
+
+.VIpgJd-ZVi9od-l9xktf-VgwJlc span { color: rgb(0, 0, 204); text-decoration: underline; cursor: pointer; margin: 0px 4px; }
+
+.VIpgJd-ZVi9od-l9xktf-I9GLp { margin: 6px 0px 0px; }
+
+.VIpgJd-ZVi9od-l9xktf-I9GLp form { margin: 0px; }
+
+.VIpgJd-ZVi9od-l9xktf-I9GLp form textarea { margin-bottom: 4px; width: 100%; }
+
+.VIpgJd-ZVi9od-l9xktf-yePe5c { margin: 6px 0px 4px; }
+
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf { z-index: 1000; position: fixed; transition-delay: 0.6s; left: -1000px; top: -1000px; }
+
+.VIpgJd-ZVi9od-aZ2wEe-wOHMyf-ti6hGc { transition-delay: 0s; left: -14px; top: -14px; }
+
+.VIpgJd-ZVi9od-aZ2wEe-OiiCO { display: flex; -webkit-box-align: center; align-items: center; -webkit-box-pack: center; justify-content: center; width: 104px; height: 104px; border-radius: 50px; background: url("https://www.gstatic.com/images/branding/product/2x/translate_24dp.png") 50% 50% no-repeat rgb(255, 255, 255); transition: all 0.6s ease-in-out 0s; transform: scale(0.4); opacity: 0; }
+
+.VIpgJd-ZVi9od-aZ2wEe-OiiCO-ti6hGc { transform: scale(0.5); opacity: 1; }
+
+.VIpgJd-ZVi9od-aZ2wEe { margin: 2px 0px 0px 2px; animation: 1.4s linear 0s infinite normal none running spinner-rotator; }
+
+@-webkit-keyframes spinner-rotator { 
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+
+@keyframes spinner-rotator { 
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(270deg); }
+}
+
+.VIpgJd-ZVi9od-aZ2wEe-Jt5cK { stroke-dasharray: 187; stroke-dashoffset: 0; stroke: rgb(66, 133, 244); transform-origin: center center; animation: 1.4s ease-in-out 0s infinite normal none running spinner-dash; }
+
+@-webkit-keyframes spinner-dash { 
+  0% { stroke-dashoffset: 187; }
+  50% { stroke-dashoffset: 46.75; transform: rotate(135deg); }
+  100% { stroke-dashoffset: 187; transform: rotate(450deg); }
+}
+
+@keyframes spinner-dash { 
+  0% { stroke-dashoffset: 187; }
+  50% { stroke-dashoffset: 46.75; transform: rotate(135deg); }
+  100% { stroke-dashoffset: 187; transform: rotate(450deg); }
+}
+
+.VIpgJd-yAWNEb-L7lbkb html, .VIpgJd-yAWNEb-L7lbkb body, .VIpgJd-yAWNEb-L7lbkb div, .VIpgJd-yAWNEb-L7lbkb span, .VIpgJd-yAWNEb-L7lbkb iframe, .VIpgJd-yAWNEb-L7lbkb h1, .VIpgJd-yAWNEb-L7lbkb h2, .VIpgJd-yAWNEb-L7lbkb h3, .VIpgJd-yAWNEb-L7lbkb h4, .VIpgJd-yAWNEb-L7lbkb h5, .VIpgJd-yAWNEb-L7lbkb h6, .VIpgJd-yAWNEb-L7lbkb p, .VIpgJd-yAWNEb-L7lbkb a, .VIpgJd-yAWNEb-L7lbkb img, .VIpgJd-yAWNEb-L7lbkb ol, .VIpgJd-yAWNEb-L7lbkb ul, .VIpgJd-yAWNEb-L7lbkb li, .VIpgJd-yAWNEb-L7lbkb table, .VIpgJd-yAWNEb-L7lbkb form, .VIpgJd-yAWNEb-L7lbkb tbody, .VIpgJd-yAWNEb-L7lbkb tr, .VIpgJd-yAWNEb-L7lbkb td { margin: 0px; padding: 0px; border: 0px; font-style: inherit; font-variant: inherit; font-weight: inherit; font-stretch: inherit; font-family: inherit; font-optical-sizing: inherit; font-kerning: inherit; font-feature-settings: inherit; font-variation-settings: inherit; font-size: 100%; vertical-align: baseline; text-align: left; line-height: normal; }
+
+.VIpgJd-yAWNEb-L7lbkb ol, .VIpgJd-yAWNEb-L7lbkb ul { list-style: none; }
+
+.VIpgJd-yAWNEb-L7lbkb table { border-collapse: collapse; border-spacing: 0px; }
+
+.VIpgJd-yAWNEb-L7lbkb caption, .VIpgJd-yAWNEb-L7lbkb th, .VIpgJd-yAWNEb-L7lbkb td { text-align: left; font-weight: normal; }
+
+div > .VIpgJd-yAWNEb-L7lbkb { padding: 10px 14px; }
+
+.VIpgJd-yAWNEb-L7lbkb { color: rgb(34, 34, 34); background-color: rgb(255, 255, 255); border: 1px solid rgb(238, 238, 238); box-shadow: rgba(0, 0, 0, 0.2) 0px 4px 16px; display: none; font-family: arial; font-size: 10pt; width: 420px; padding: 12px; position: absolute; z-index: 10000; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-nVMfcd-fmcmS, .VIpgJd-yAWNEb-yAWNEb-Vy2Aqc-pbTTYe { clear: both; font-size: 10pt; position: relative; text-align: justify; width: 100%; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-r4nke { color: rgb(153, 153, 153); font-family: arial, sans-serif; margin: 4px 0px; text-align: left; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-TvD9Pc-LgbsSe { display: none; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-l4eHX { float: left; margin: 0px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-Z0Arqf-PLDbbf { display: inline-block; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-fw42Ze-Z0Arqf-haAclf { display: none; width: 100%; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-Z0Arqf-H9tDt { margin-top: 20px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-LK5yu { float: left; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-qwU8Me { float: right; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-cGMI2b { min-height: 15px; position: relative; height: 1%; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-jOfkMb-Ne3sFf { background: rgb(41, 145, 13); border-radius: 4px; box-shadow: rgb(30, 102, 9) 0px 2px 2px inset; color: white; font-size: 9pt; font-weight: bolder; margin-top: 12px; padding: 6px; text-shadow: rgb(30, 102, 9) 1px 1px 1px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-Z0Arqf-hSRGPd { color: rgb(17, 85, 204); cursor: pointer; font-family: arial; font-size: 11px; margin-right: 15px; text-decoration: none; }
+
+.VIpgJd-yAWNEb-L7lbkb > textarea { font-family: arial; resize: vertical; width: 100%; margin-bottom: 10px; border-radius: 1px; border-width: 1px; border-style: solid; border-color: silver rgb(217, 217, 217) rgb(217, 217, 217); border-image: initial; font-size: 13px; height: auto; overflow-y: auto; padding: 1px; }
+
+.VIpgJd-yAWNEb-L7lbkb textarea:focus { box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px inset; border: 1px solid rgb(77, 144, 254); outline: none; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-Z0Arqf-IbE0S { margin-right: 10px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp { min-height: 25px; vertical-align: middle; padding-top: 8px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp { margin-bottom: 0px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input { display: inline-block; min-width: 54px; border: 1px solid rgba(0, 0, 0, 0.1); text-align: center; color: rgb(68, 68, 68); font-size: 11px; font-weight: bold; height: 27px; outline: 0px; padding: 0px 8px; vertical-align: middle; line-height: 27px; margin: 0px 16px 0px 0px; box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px; border-radius: 2px; transition: all 0.218s ease 0s; background-color: rgb(245, 245, 245); background-image: -webkit-linear-gradient(top, rgb(245, 245, 245), rgb(241, 241, 241)); user-select: none; cursor: default; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input:hover { border: 1px solid rgb(198, 198, 198); color: rgb(34, 34, 34); transition: all 0s ease 0s; background-color: rgb(248, 248, 248); background-image: -webkit-linear-gradient(top, rgb(248, 248, 248), rgb(241, 241, 241)); }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input:active { border: 1px solid rgb(198, 198, 198); color: rgb(51, 51, 51); background-color: rgb(246, 246, 246); background-image: -webkit-linear-gradient(top, rgb(246, 246, 246), rgb(241, 241, 241)); }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input:focus .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input.AHmuwe .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input:active, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input:focus:active { box-shadow: rgba(255, 255, 255, 0.5) 0px 0px 0px 1px inset; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input:focus, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input.AHmuwe { outline: none; border: 1px solid rgb(77, 144, 254); z-index: 4 !important; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input.gk6SMd { background-color: rgb(238, 238, 238); background-image: -webkit-linear-gradient(top, rgb(238, 238, 238), rgb(224, 224, 224)); box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px inset; border: 1px solid rgb(204, 204, 204); color: rgb(51, 51, 51); }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input .VIpgJd-yAWNEb-Z0Arqf-sFeBqf { color: white; border-color: rgb(48, 121, 237); background-color: rgb(77, 144, 254); background-image: -webkit-linear-gradient(top, rgb(77, 144, 254), rgb(71, 135, 237)); }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input .VIpgJd-yAWNEb-Z0Arqf-sFeBqf:hover .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input .VIpgJd-yAWNEb-Z0Arqf-sFeBqf:focus, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input .VIpgJd-yAWNEb-Z0Arqf-sFeBqf.AHmuwe .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input .VIpgJd-yAWNEb-Z0Arqf-sFeBqf:active { border-color: rgb(48, 121, 237); background-color: rgb(53, 122, 232); background-image: -webkit-linear-gradient(top, rgb(77, 144, 254), rgb(53, 122, 232)); }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input .VIpgJd-yAWNEb-Z0Arqf-sFeBqf:hover { box-shadow: rgb(255, 255, 255) 0px 0px 0px 1px inset, rgba(0, 0, 0, 0.1) 0px 1px 1px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input:focus, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input.AHmuwe, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input:active, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input:hover, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input .VIpgJd-yAWNEb-Z0Arqf-sFeBqf:focus, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input .VIpgJd-yAWNEb-Z0Arqf-sFeBqf.AHmuwe, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input .VIpgJd-yAWNEb-Z0Arqf-sFeBqf:active, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-L4Nn5e-I9GLp .VIpgJd-yAWNEb-Z0Arqf-I9GLp input .VIpgJd-yAWNEb-Z0Arqf-sFeBqf:hover { border-color: rgb(48, 121, 237); }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-mrxPge { color: rgb(153, 153, 153); font-family: arial, sans-serif; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-W0vJo-fmcmS { color: rgb(153, 153, 153); font-size: 11px; font-family: arial, sans-serif; margin: 15px 0px 5px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-u0pjoe-fmcmS { color: rgb(136, 0, 0); display: none; font-size: 9pt; }
+
+.VIpgJd-yAWNEb-VIpgJd-fmcmS-sn54Q { background-color: rgb(201, 215, 241); box-shadow: rgb(153, 153, 170) 2px 2px 4px; box-sizing: border-box; position: relative; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-xl07Ob .VIpgJd-yAWNEb-VIpgJd-xl07Ob { background: rgb(255, 255, 255); border: 1px solid rgb(221, 221, 221); box-shadow: rgb(153, 153, 170) 0px 2px 4px; min-width: 0px; outline: none; padding: 0px; position: absolute; z-index: 2000; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-xl07Ob .VIpgJd-yAWNEb-VIpgJd-j7LFlb { cursor: pointer; padding: 2px 5px 5px; margin-right: 0px; border-style: none; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-xl07Ob .VIpgJd-yAWNEb-VIpgJd-j7LFlb:hover { background: rgb(221, 221, 221); }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-xl07Ob .VIpgJd-yAWNEb-VIpgJd-j7LFlb h1 { font-size: 100%; font-weight: bold; margin: 4px 0px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-xl07Ob .VIpgJd-yAWNEb-VIpgJd-j7LFlb strong { color: rgb(52, 90, 173); }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-VIpgJd-eKm5Fc-hFsbo { text-align: right; position: absolute; right: 0px; left: auto; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-VIpgJd-j7LFlb-SIsrTd .VIpgJd-yAWNEb-VIpgJd-eKm5Fc-hFsbo { text-align: left; position: absolute; left: 0px; right: auto; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-yAWNEb-Vy2Aqc-fmcmS, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-TVLw9c-ppHlrf-sn54Q { background-color: rgb(241, 234, 0); border-radius: 4px; box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 4px; box-sizing: border-box; color: rgb(241, 234, 0); cursor: pointer; margin: -2px -2px -2px -3px; padding: 2px 2px 2px 3px; position: relative; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-TVLw9c-ppHlrf-sn54Q { color: rgb(34, 34, 34); }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-yAWNEb-Vy2Aqc-pbTTYe { color: white; position: absolute !important; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-TVLw9c-ppHlrf, .VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-TVLw9c-ppHlrf .VIpgJd-yAWNEb-TVLw9c-ppHlrf-sn54Q { background-color: rgb(201, 215, 241); border-radius: 4px 4px 0px 0px; box-shadow: rgba(0, 0, 0, 0.5) 3px 3px 4px; box-sizing: border-box; cursor: pointer; margin: -2px -2px -2px -3px; padding: 2px 2px 3px 3px; position: relative; }
+
+.VIpgJd-yAWNEb-L7lbkb span:focus { outline: none; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-TVLw9c-DyVDA { background-color: transparent; border: 1px solid rgb(77, 144, 254); border-radius: 0px; margin: -2px; padding: 1px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-yAWNEb-TVLw9c-sn54Q-LzX3ef { border-left: 2px solid red; margin-left: -2px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-yAWNEb-TVLw9c-sn54Q-YIAiIb { border-right: 2px solid red; margin-right: -2px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-YPqjbf { padding: 2px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-YPqjbf-fmcmS { font-size: 11px; padding: 2px 2px 3px; margin: 0px; background-color: rgb(255, 255, 255); color: rgb(51, 51, 51); border-width: 1px; border-style: solid; border-color: rgb(192, 192, 192) rgb(217, 217, 217) rgb(217, 217, 217); border-image: initial; display: inline-block; vertical-align: top; height: 21px; box-sizing: border-box; border-radius: 1px; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-YPqjbf-fmcmS:hover { border-width: 1px; border-style: solid; border-color: rgb(160, 160, 160) rgb(185, 185, 185) rgb(185, 185, 185); border-image: initial; box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px inset; }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-YPqjbf-fmcmS:focus { box-shadow: rgba(0, 0, 0, 0.3) 0px 1px 2px inset; outline: none; border: 1px solid rgb(77, 144, 254); }
+
+.VIpgJd-yAWNEb-L7lbkb .VIpgJd-yAWNEb-IFdKyd-YPqjbf-sFeBqf { font-size: 11px; padding: 2px 6px 3px; margin: 0px 0px 0px 2px; height: 21px; }
+
+.VIpgJd-yAWNEb-hvhgNd { font-family: "Google Sans", Arial, sans-serif; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-l4eHX-i3jM8c { position: absolute; top: 10px; left: 14px; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-l4eHX-SIsrTd { position: absolute; top: 10px; right: 14px; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-k77Iif-i3jM8c, .VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-k77Iif-SIsrTd { margin: 16px; padding: 0px; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-IuizWc { margin: 0px 0px 0px 36px; padding: 0px; color: rgb(116, 119, 117); font-size: 14px; font-weight: 500; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-k77Iif-SIsrTd .VIpgJd-yAWNEb-hvhgNd-IuizWc { text-align: right; margin: 0px 36px 0px 0px; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-axAV1 { width: auto; padding: 12px 0px 0px; color: rgb(31, 31, 31); font-size: 16px; text-align: initial; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-axAV1 .VIpgJd-yAWNEb-SIsrTd { text-align: right; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-N7Eqid { border-radius: 0px 0px 12px 12px; margin: 0px; background: rgb(241, 244, 249); position: relative; min-height: 50px; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-N7Eqid .VIpgJd-yAWNEb-SIsrTd { text-align: right; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od { display: inline-block; width: 77%; padding: 12px; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od .VIpgJd-yAWNEb-SIsrTd { text-align: right; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-UTujCb { color: rgb(31, 31, 31); font-size: 12px; font-weight: 500; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od .VIpgJd-yAWNEb-SIsrTd .VIpgJd-yAWNEb-hvhgNd-UTujCb { text-align: right; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-eO9mKe { color: rgb(68, 71, 70); font-size: 12px; padding-top: 4px; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od .VIpgJd-yAWNEb-SIsrTd .VIpgJd-yAWNEb-hvhgNd-eO9mKe { text-align: right; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-xgov5 { position: absolute; top: 10px; right: 5px; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-xgov5 .VIpgJd-yAWNEb-SIsrTd { left: 5px; right: auto; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-THI6Vb { fill: rgb(11, 87, 208); }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-bgm6sf { margin: -4px 2px 0px 0px; padding: 2px 0px 0px; width: 48px; height: 48px; border: none; border-radius: 24px; cursor: pointer; background: none; }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-bgm6sf:hover { background: rgb(232, 235, 236); }
+
+.VIpgJd-yAWNEb-hvhgNd .VIpgJd-yAWNEb-hvhgNd-aXYTce { display: none; }
+
+sentinel { }
+------MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52----
+Content-Type: image/svg+xml
+Content-Transfer-Encoding: binary
+Content-Location: https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg
+
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" height="24" viewBox="0 0 24 24" width="24"><path d="M0 0h24v24H0z" fill="none"/><defs><path d="M21.5 5h-9.17L11 1H2.5C1.68 1 1 1.68 1 2.5v15c0 .83.68 1.5 1.5 1.5h9.17L13 23h8.5c.82 0 1.5-.68 1.5-1.5v-15c0-.83-.68-1.5-1.5-1.5z" id="a"/></defs><clipPath id="b"><use overflow="visible" xlink:href="#a"/></clipPath><g clip-path="url(#b)"><image height="31" opacity=".2" overflow="visible" transform="translate(3 1)" width="29" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAB0AAAAfCAYAAAAbW8YEAAAACXBIWXMAAAsSAAALEgHS3X78AAAA GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAABQBJREFUeNq8V8tu20YUvXdm+LCk RKiMwI1TFEXhVZJd1gW66xekv9DPqPsvXdU/UaDroJskKy+CInCcGpKtFy2SM/f2DEXZia0odtKW AkFJ8zhzzn3S0Ycvps+79EMDbj3Yfgv4EM+XTN/fEOb3Zg3AXmq7j64D5/e/x/EfzZMnX5jx+LFZ LLyp6yNDOzskYb6RubFdpbdvKUl2Jc+d9PvP5dmzUyH6TVoYXQOq+H5g9vb+cONsO9maLpIyyZPU kZNAppmh9Vpg5kSXwCSVJ5/Vi/r8Tl73y2F9ePidJ3oaga+B4vkUgF+6EW1ndz11gvNdDdL1bDNr yKkCWO16thyUGWIIeae2ZGvn1of5xFExoGF5eHgM4ANZsW032Tf05MjeW+xmNKeedeWAg9tmywPM 6rGYzOAPBSfQ5Ss0Nf4pAmRrSmBP1ehIxQ6DpxF1aXaSH5X0bDcAR1aOxLRPtPdrZrwnd55Sx3gz IMO72OwBq9kmox0RSkHHRNxrRJWFDbQXKpR1xN4eOfx0NqnMdFHulY/rw/1RAE5crEvvffGCvX/E VUoOC3Mm24eaO6TyNZjeB5E+sDLMt2tCqZEW8lcgPSU2x0IhKlAYoTP4xUTueUMvHvJK3ouQ8ffH HP62JpGeg/VSYciqNADbHQxvY5etdr65yhNXlG2B5xjzgWfHJoSeZ5Olbuaq+czQyYSvxal701dJ SWoigRNqXItjORhsC+x74NfDtPQ6aGPkgAUlGROpTKBQR4gbB1x6fjz3/DK8GsoHj/SVG6pJACi+ NhQdApsQJFPCeliYKImgeEJmylc3Xzw5yp9xnIMYMkZt9HjVhK/GeHtqZI5+KUVJXtSVQcwcYDPo FI93jhW+DWSjzZrGts0NQSwOZTFoMaMBaly6CTFZG2KXUt3Z1aQzC36rKrFJ0cgUb6aZRnuRwjtI lo7Eq3CLWSya4eJ7a+TN2eudvClbk17ItFepoQLrpyQyxkZTjBYIiwqnXwF/1mXerQivtu+Hohp7 tf7cWJnCTgBleCQ3bBEaPiaCTRXkNqBLu955o2kv+NzIIogDkGlAEfuwL51DYh9z3sdK1y1ALyX2 FxJLK3Fj339NYnO16P4fEl8J9HUSaytxTHFRYqrhnJ60AZU2lNpDNOULaZH1FqBXJS4LhN8ECeos MgbLWUx3AK+xv4+ZKN6ACxxlZw0xDzdZKj7Z6E1ALyQ+91WNclwgIU6wwRli7xTkzjA8BQCSBxfL +MUhlnGMDMYlfsPuWsdSF4GZa226io1MW4nzPvkQbWgDnIlGYHSCTU+QbOI9BNtTTB7hxmEIh+FT KDJGZoiVpkA6KmNRj90E0duPNmaNxJ29QVh0RxWsOMNRh0JyDIk7LBK1iw62BV1cLKaXpY2n+HWs GkZidOZEysp3fDK4K3TvK90EisGf6bD/k6CTqDpBZt6EoTWcSXQU5mhX1FvNm/XRiyQiaw0XKmDi EXL9kdV6FMMu9kvpyUDoB3SIB5uYxp2+fSr9P7Na7IOipsUpxZ5BqISNTw1rFy6bGrKoIjAbS9uu EKoT2NowqiWJ7cqM0KD9lT8X2t+lKz3S2l4Z/e4v9ptXzcFyn9Zd8nlHHcjXaNZsaCvKqlW6dWP2 Ibr7sdE2e68H9sy+TvN5J6nwydLUvtuWfmoLugH4Zg34JzbbHwO/wavG+68VdJPXihuC/zcvUJ+0 0W2ufwQYAGHKK2CFMIrzAAAAAElFTkSuQmCC"/><radialGradient cx="7.394" cy="5.437" gradientUnits="userSpaceOnUse" id="c" r="23.416"><stop offset="0" stop-color="#EEE"/><stop offset=".432" stop-color="#E6E6E6"/><stop offset="1" stop-color="#E1E1E1"/></radialGradient><path d="M13 23h8.5c.82 0 1.5-.68 1.5-1.5v-15c0-.83-.68-1.5-1.5-1.5H7l6 18z" fill="url(#c)"/></g><path clip-path="url(#b)" d="M18 11v-1h-1v1h-3.75v1h5.32c-.2.49-.6 1.3-1.32 2.14-.51-.6-.86-1.18-1.1-1.64h-1.11c.36.84.9 1.66 1.52 2.38l-2.6 2.58.71.71 2.58-2.58 2.58 2.58.71-.71-2.6-2.58c.74-.86 1.33-1.85 1.68-2.88H21v-1h-3z" fill="#607D8B"/><linearGradient gradientUnits="userSpaceOnUse" id="d" x1="12.333" x2="23" y1="14" y2="14"><stop offset="0" stop-color="#212121" stop-opacity=".1"/><stop offset="1" stop-color="#212121" stop-opacity=".02"/></linearGradient><path clip-path="url(#b)" d="M12.33 5L23 15.67V23H13" fill="url(#d)"/><g clip-path="url(#b)"><image height="8" opacity=".1" overflow="visible" transform="translate(10.5 17.5)" width="9" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAoAAAAJCAYAAAALpr0TAAAACXBIWXMAAAsSAAALEgHS3X78AAAA GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAOFJREFUeNp0UD1LA0EUnLe7JsJh CiFpLVNYaS3411L7Z/InUpgmqRIRLGxEOEVQsoRcbnecu6AGTB4M72vevjdr+DPDf+Nvs3858q7a Fp4oDOZBJ5dJMCVDzJ2T+LYYpeAyTj39UMNXhA00HABXKy89bY6UlqrFoMHm5QK0a/mbXYxSyyZm eCBTe5Kr68+NGq+Kv4QzoSM8q3ZP8imjXjdEv/6Ysnd+q6a7UN4XFsKYlifbUJXvj3ftytAqM1vJ z6UgGvgiIbN90g8RVddFKZ/pzqX+Y5NDtdonHTI71vgWYADzWmdx/4fpmQAAAABJRU5ErkJggg=="/><path d="M17 19l-4 4-1.33-4" fill="#3F51B5"/></g><path clip-path="url(#b)" d="M21.5 5H7l.04.12H21.5c.82 0 1.5.67 1.5 1.5V6.5c0-.83-.68-1.5-1.5-1.5z" fill="#212121" fill-opacity=".02"/><path clip-path="url(#b)" d="M21.5 22.88H13L11.71 19h-.04L13 23h8.5c.82 0 1.5-.68 1.5-1.5v-.12c0 .82-.68 1.5-1.5 1.5z" fill="#212121" fill-opacity=".1"/><path clip-path="url(#b)" d="M12.97 22.91L13 23l4-4h-.12" fill="#1A237E" fill-opacity=".2"/><path clip-path="url(#b)" d="M11.67 19.12h5.21L17 19h-5.33" fill="#1A237E" fill-opacity=".1"/><g clip-path="url(#b)"><image height="22" opacity=".2" overflow="visible" transform="translate(-.5 -.5)" width="20" xlink:href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABUAAAAXCAYAAADk3wSdAAAACXBIWXMAAAsSAAALEgHS3X78AAAA GXRFWHRTb2Z0d2FyZQBBZG9iZSBJbWFnZVJlYWR5ccllPAAAAUpJREFUeNqslbFOwzAQQO/sQCRc sqAOlRgrMjCVr+Er+IZ+Ax/WTCwVeyVQl9IOQY2Pc2qhNFwcGsdSrHNsP52fpTPCeUP4X6PQZA2Z Pi41lqXRpCYKtA5tsFBVFdo9penh821ZSWsS112X1hBdPXG44BSyQMaEoHcJ6QJLu+LxrguKQDQB UAuOn3nfLATlqc0psmvuvyQVibfARyaXoQPeh6Hk9Mw4uL2bv3xs31+P7UWq5Rd7LsvN8akg5zBP KTPSIgWXN3OCQo6ARkpiCNQd36maegV6DGgjW1lBJFRWMBQaVDAUGlQwAvSvghhop4IYaKeCkaDn CmKhooJYqKhAtao59VV1od3w99BU4EsfcQVXruBuPBMvgJIv1sdmPSVA3HOhLvy/bCC0qDk8rjP9 TtWB36gVv1Hrvjeq792SjokRF/Z7Fz8CDAC8EmWDKVGDLgAAAABJRU5ErkJggg=="/><path d="M11 1H2.5C1.68 1 1 1.68 1 2.5v15c0 .83.68 1.5 1.5 1.5H17L11 1z" fill="#4285F4"/></g><path clip-path="url(#b)" d="M2.5 1C1.68 1 1 1.68 1 2.5v.12c0-.82.68-1.5 1.5-1.5H11V1H2.5z" fill="#FFF" fill-opacity=".02"/><path clip-path="url(#b)" d="M11 1v.12l5.92 17.75H2.5c-.82 0-1.5-.67-1.5-1.5v.12c0 .84.68 1.51 1.5 1.51H17L11 1z" fill="#212121" fill-opacity=".1"/><g clip-path="url(#b)"><path d="M7.5 10v1.2h1.98c-.08.52-.6 1.51-1.98 1.51-1.2 0-2.17-.99-2.17-2.21S6.3 8.29 7.5 8.29c.68 0 1.13.29 1.39.54l.95-.92C9.24 7.35 8.44 7 7.5 7 5.57 7 4 8.57 4 10.5S5.57 14 7.5 14c2.02 0 3.36-1.42 3.36-3.42 0-.23-.02-.41-.06-.58H7.5z" fill="#EEE"/><path d="M4 7h7v7H4z" fill="none"/></g><radialGradient cx="1.457" cy="1.42" gradientUnits="userSpaceOnUse" id="e" r="29.792"><stop offset="0" stop-color="#FFF" stop-opacity=".1"/><stop offset="1" stop-color="#FFF" stop-opacity="0"/></radialGradient><path d="M21.5 5h-9.17L11 1H2.5C1.68 1 1 1.68 1 2.5v15c0 .83.68 1.5 1.5 1.5h9.17L13 23h8.5c.82 0 1.5-.68 1.5-1.5v-15c0-.83-.68-1.5-1.5-1.5z" fill="url(#e)"/></svg>
+------MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52----
+Content-Type: text/html
+Content-ID: <frame-16AB7B7FA308AC302AB13DC79BC1BCD5@mhtml.blink>
+Content-Transfer-Encoding: binary
+
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8"></head><body></body></html>
+------MultipartBoundary--HKHECh5DONKeYplf4NIn1aRSBKtpwjil7q8rh81f52------
