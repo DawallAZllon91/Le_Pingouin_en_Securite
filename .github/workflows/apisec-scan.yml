@@ -69,3 +69,48 @@ jobs:
          uses: github/codeql-action/upload-sarif@v2
          with:
           sarif_file: ./apisec-results.sarif
+
+
+<button popovertarget="foo">Toggle the popover</button>
+<div id="foo" popover>Popover content</div>
+
+      <button popovertarget="foo">Toggle the popover</button>
+<button popovertarget="foo" popovertargetaction="show">This button only shows the popover</button>
+<button popovertarget="foo" popovertargetaction="hide">This button only hides the popover</button>
+<div id="foo" popover>Popover content</div>
+
+// Note that `popoverTargetElement` directly sets an element reference:
+myButton.popoverTargetElement = myElement
+myButton.popoverTargetAction = 'show'
+
+
+const popover = document.querySelector('[popover]')
+popover.showPopover() // Show the popover
+popover.hidePopover() // Hide a visible popover
+popover.togglePopover() // Toggle the open/closed state of a popover
+
+const popover = document.createElement('div')
+popover.popover = 'auto'
+popover.matches(':popover-open') === false
+popover.showPopover()
+popover.matches(':popover-open') === true
+[popover] {
+  position: fixed;
+  inset: 0;
+  width: fit-content;
+  height: fit-content;
+  margin: auto;
+  border: solid;
+  padding: 0.25em;
+  overflow: auto;
+  color: CanvasText;
+  background-color: Canvas;
+}
+
+[popover]::backdrop {
+    pointer-events: none !important;
+}
+
+[popover]{match this when popover is hidden} {
+  display: none;
+}
