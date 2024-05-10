@@ -1,0 +1,148 @@
+
+03-20 01:13:16.420  2321 21907 I chatty  : uid=10021(com.google.android.gms) lowpool[17] expire 2 lines
+03-20 01:13:16.421  2321 21907 E AsyncOperation: serviceID=40, operation=LogOperation
+03-20 01:13:16.421  2321 21907 E AsyncOperation: OperationException[Status{statusCode=Storage full, resolution=null}]
+03-20 01:13:16.421  2321 21907 E AsyncOperation: 	at nye.a(:com.google.android.gms@12862063@12.8.62 (100408-199405334):113)
+03-20 01:13:16.421  2321 21907 E AsyncOperation: 	at vyg.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):29)
+03-20 01:13:16.421  2321 21907 E AsyncOperation: 	at bbxh.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):2)
+03-20 01:13:16.421  2321 21907 E AsyncOperation: 	at pir.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):24)
+03-20 01:13:16.421  2321 21907 E AsyncOperation: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+03-20 01:13:16.421  2321 21907 E AsyncOperation: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+03-20 01:13:16.421  2321 21907 E AsyncOperation: 	at pol.run(Unknown Source:7)
+03-20 01:13:16.421  2321 21907 E AsyncOperation: 	at java.lang.Thread.run(Thread.java:764)
+03-20 01:13:16.637 25850 25850 D AndroidRuntime: >>>>>> START com.android.internal.os.RuntimeInit uid 0 <<<<<<
+03-20 01:13:16.692 25850 25850 I app_process: The ClassLoaderContext is a special shared library.
+03-20 01:13:16.714 25850 25850 D AndroidRuntime: Calling main entry com.android.commands.am.Am
+--------- beginning of system
+03-20 01:13:16.719  1199  4161 I ActivityManager: Force stopping org.chromium.chrome.tests appid=16925 user=0: start instr
+03-20 01:13:16.739  1199  1222 I ActivityManager: Start proc 25859:org.chromium.chrome.tests/u0a6925 for added application org.chromium.chrome.tests
+03-20 01:13:16.775 25859 25859 W ActivityThread: Application org.chromium.chrome.tests can be debugged on port 8100...
+03-20 01:13:16.778 25859 25859 I um.chrome.test: The ClassLoaderContext is a special shared library.
+03-20 01:13:16.779 25859 25859 I um.chrome.test: The ClassLoaderContext is a special shared library.
+03-20 01:13:16.788 25859 25859 W um.chrome.test: Unknown chunk type '200'.
+03-20 01:13:16.798 25859 25859 I MonitoringInstr: newApplication called!
+03-20 01:13:16.804 25859 25859 I cr_SplitCompatApp: Launched version=125.0.6368.0 minSdkVersion=1 isBundle=false processName=org.chromium.chrome.tests isIsolated=false
+03-20 01:13:16.812 25859 25859 I cr_CommandLine: COMMAND-LINE FLAGS: [_, --enable-test-intents] (from /data/local/tmp/test-cmdline-file)
+03-20 01:13:16.814 25859 25859 W FirebaseApp: Default FirebaseApp failed to initialize because no default options were found. This usually means that com.google.gms:google-services was not applied to your gradle project.
+03-20 01:13:16.814 25859 25859 I FirebaseInitProvider: FirebaseApp initialization unsuccessful
+03-20 01:13:16.816 25859 25859 I MonitoringInstr: Instrumentation started!
+03-20 01:13:16.820 25859 25859 I AndroidJUnitRunner: onCreate Bundle[{coverageFile=/sdcard/chrome/test/coverage/org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest_testBindingToken_group.exec, waitForActivitiesToComplete=false, coverage=true, class=org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testBindingToken,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testContentTopMargin,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetAddClickListener,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetCollapseClickListener,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetCursorVisibility,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetHeaderTitle,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetInitialScrollIndex,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetInitialScrollIndex_Linear,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetIsTitleTextFocused,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetMainContentVisibility,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetPrimaryColor,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetTitleTextOnFocusListener,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetTitleTextWatcher,org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest#testSetUngroupbarBackgroundColor, org.chromium.base.test.BaseChromiumAndroidJUnitRunner.IsUnitTest=true, org.chromium.base.test.util.Screenshooter.ScreenshotDir=/sdcard/tmp-1ceb0f7b4f6e6, org.chromium.base.test.BaseChromiumAndroidJUnitRunner.ClangCoverageDeviceFile=/sdcard/chrome/test/coverage/profraw/org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest_testBindingToken_group_%2m_%p%c.profraw, org.chromium.base.test.ScreenshotOnFailureStatement.ScreenshotFile=/sdcard/temp_file-ebf5424a7530.png}]
+03-20 01:13:16.832 25859 25859 I MonitoringInstr: No JSBridge.
+03-20 01:13:16.838  2527  5580 I FontsContentProvider: Received query Google Sans:700, URI content://com.google.android.gms.fonts
+03-20 01:13:16.838  2527  5580 I FontsContentProvider: Query [Google Sans:700] resolved to {Google Sans, wdth 100.0, wght 700, ital 0.0, bestEffort false}
+03-20 01:13:16.849  2527 24407 E FontsHttpClientDL: Download https://fonts.gstatic.com/s/a/13dc41812ad1461ddc98d5d863984d13ce84c65cfe41db589bcbc7cba95fbf84.ttf failed
+03-20 01:13:16.850  2527 22327 E FontFetch: https://fonts.gstatic.com/s/a/13dc41812ad1461ddc98d5d863984d13ce84c65cfe41db589bcbc7cba95fbf84.ttf Status{statusCode=Unable to resolve host "fonts.gstatic.com": No address associated with hostname, resolution=null}; declaring failure
+03-20 01:13:16.851  2527  5580 I FontsContentProvider: Fetch {Google Sans, wdth 100.0, wght 700, ital 0.0, bestEffort false} end status Status{statusCode=Unable to resolve host "fonts.gstatic.com": No address associated with hostname, resolution=null}
+03-20 01:13:16.854  2321  5219 E AsyncOperation: serviceID=40, operation=LogOperation
+03-20 01:13:16.854  2321  5219 E AsyncOperation: OperationException[Status{statusCode=Storage full, resolution=null}]
+03-20 01:13:16.854  2321  5219 E AsyncOperation: 	at nye.a(:com.google.android.gms@12862063@12.8.62 (100408-199405334):113)
+03-20 01:13:16.854  2321  5219 E AsyncOperation: 	at vyg.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):29)
+03-20 01:13:16.854  2321  5219 E AsyncOperation: 	at bbxh.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):2)
+03-20 01:13:16.854  2321  5219 E AsyncOperation: 	at pir.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):24)
+03-20 01:13:16.854  2321  5219 E AsyncOperation: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+03-20 01:13:16.854  2321  5219 E AsyncOperation: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+03-20 01:13:16.854  2321  5219 E AsyncOperation: 	at pol.run(Unknown Source:7)
+03-20 01:13:16.854  2321  5219 E AsyncOperation: 	at java.lang.Thread.run(Thread.java:764)
+03-20 01:13:16.889 25859 25878 I TestRunner: run started: 14 tests
+03-20 01:13:16.897 25859 25878 D NetworkSecurityConfig: Using Network Security Config from resource network_security_config debugBuild: false
+03-20 01:13:16.906 25859 25878 I TestRunner: started: testSetInitialScrollIndex_Linear(org.chromium.chrome.browser.tasks.tab_management.TabGridDialogViewBinderTest)
+03-20 01:13:16.912  1199 21088 I ActivityManager: START u0 {flg=0x10000000 cmp=org.chromium.chrome.tests/org.chromium.ui.test.util.BlankUiTestActivity} from uid 16925
+03-20 01:13:16.918   804   804 E android.hardware.power@1.3-service.crosshatch-libperfmgr: Governor not supported by powerHAL, skipping
+03-20 01:13:16.924 25859 25859 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@b7a7b2f
+03-20 01:13:16.934 25859 25859 I org.chromium.chrome.tests: type=1400 audit(0.0:7512): avc: denied { open } for comm=45474C20496E6974 path="/dev/__properties__/u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=24767 scontext=u:r:untrusted_app:s0:c13,c283,c512,c768 tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=1 b/78460200
+03-20 01:13:16.934 25859 25859 I org.chromium.chrome.tests: type=1400 audit(0.0:7513): avc: denied { getattr } for comm=45474C20496E6974 path="/dev/__properties__/u:object_r:vendor_default_prop:s0" dev="tmpfs" ino=24767 scontext=u:r:untrusted_app:s0:c13,c283,c512,c768 tcontext=u:object_r:vendor_default_prop:s0 tclass=file permissive=1 b/78460200
+03-20 01:13:16.965   804   804 E android.hardware.power@1.3-service.crosshatch-libperfmgr: Governor not supported by powerHAL, skipping
+03-20 01:13:16.969  1486  1486 I WallpaperService: engine paused
+03-20 01:13:16.977 25859 25859 D OpenGLRenderer: Skia GL Pipeline
+03-20 01:13:16.997 25859 25883 I Adreno  : QUALCOMM build                   : 3f88ca2, I42f6fe38fb
+03-20 01:13:16.997 25859 25883 I Adreno  : Build Date                       : 07/13/18
+03-20 01:13:16.997 25859 25883 I Adreno  : OpenGL ES Shader Compiler Version: EV031.24.00.00
+03-20 01:13:16.997 25859 25883 I Adreno  : Local Branch                     : 50.04
+03-20 01:13:16.997 25859 25883 I Adreno  : Remote Branch                    : 
+03-20 01:13:16.997 25859 25883 I Adreno  : Remote Branch                    : 
+03-20 01:13:16.997 25859 25883 I Adreno  : Reconstruct Branch               : 
+03-20 01:13:16.997 25859 25883 I Adreno  : Build Config                     : S P 4.0.10 AArch64
+03-20 01:13:17.000 25859 25883 I Adreno  : PFP: 0x016ee170, ME: 0x00000000
+03-20 01:13:17.001  1404  1404 I GoogleInputMethod: onFinishInput() : Dummy InputConnection bound
+03-20 01:13:17.001  1404  1404 I GoogleInputMethod: onStartInput() : Dummy InputConnection bound
+03-20 01:13:17.002 25859 25883 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasWideColorDisplay retrieved: 1
+03-20 01:13:17.003 25859 25883 I ConfigStore: android::hardware::configstore::V1_0::ISurfaceFlingerConfigs::hasHDRDisplay retrieved: 1
+03-20 01:13:17.003 25859 25883 I OpenGLRenderer: Initialized EGL, version 1.4
+03-20 01:13:17.003 25859 25883 D OpenGLRenderer: Swap behavior 2
+03-20 01:13:17.016   804   804 E android.hardware.power@1.3-service.crosshatch-libperfmgr: Governor not supported by powerHAL, skipping
+03-20 01:13:17.031   787  1380 D sound_trigger_hw: stdev_stop_recognition:[1] Enter
+03-20 01:13:17.031   787  1380 D sound_trigger_hw: active_state_fn:[1] handle event id 7
+03-20 01:13:17.031   787  1380 D sound_trigger_hw: active_state_fn:[1] unhandled event
+03-20 01:13:17.031   787  1380 D sound_trigger_hw: active_state_fn:[1] handle event id 4
+03-20 01:13:17.031   787  1380 D sound_trigger_hw: dereg_hal_event_session: ST_EVENT_SESSION_DEREGISTER capture_handle 62 p_ses 0xf20f4000
+03-20 01:13:17.031   787  1380 D sound_trigger_hw: stop:[1] gcs stop VA engine, size=24
+03-20 01:13:17.031   787  1380 D         : pktzr_send_cmd: opcode = 0x5, size = 24, token = 2673
+03-20 01:13:17.032   804   804 E android.hardware.power@1.3-service.crosshatch-libperfmgr: Governor not supported by powerHAL, skipping
+03-20 01:13:17.032  1199  1219 I ActivityManager: Displayed org.chromium.chrome.tests/org.chromium.ui.test.util.BlankUiTestActivity: +105ms
+03-20 01:13:17.034   644   723 W SurfaceFlinger: Attempting to set client state on removed layer: Splash Screen org.chromium.chrome.tests#0
+03-20 01:13:17.034   644   723 W SurfaceFlinger: Attempting to destroy on removed layer: Splash Screen org.chromium.chrome.tests#0
+03-20 01:13:17.041   787  1130 D         : ipc_resp_thread: opcode: 0x2, payload_size: 4, resp_buf size: 16
+03-20 01:13:17.041   787  1130 D         : pktzr_resp_cb: opcode = 0x2 size = 4 token = 2673
+03-20 01:13:17.041   787  1130 D         : pktzr_resp_cb: token 2673 matched
+03-20 01:13:17.041   787  1380 D sound_trigger_hw: stop:[1] calling gcs_disable with handle 1
+03-20 01:13:17.041   787  1380 E         : __gcs_disable_update_pld: sgt_array[i] = 0x1
+03-20 01:13:17.041   787  1380 E         : __gcs_disable_update_pld: sgt_array[i] = 0x2
+03-20 01:13:17.041   787  1380 D         : pktzr_send_cmd: opcode = 0x4, size = 80, token = 2674
+03-20 01:13:17.042  2321 21907 E AsyncOperation: serviceID=40, operation=LogOperation
+03-20 01:13:17.042  2321 21907 E AsyncOperation: OperationException[Status{statusCode=Storage full, resolution=null}]
+03-20 01:13:17.042  2321 21907 E AsyncOperation: 	at nye.a(:com.google.android.gms@12862063@12.8.62 (100408-199405334):113)
+03-20 01:13:17.042  2321 21907 E AsyncOperation: 	at vyg.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):29)
+03-20 01:13:17.042  2321 21907 E AsyncOperation: 	at bbxh.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):2)
+03-20 01:13:17.042  2321 21907 E AsyncOperation: 	at pir.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):24)
+03-20 01:13:17.042  2321 21907 E AsyncOperation: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+03-20 01:13:17.042  2321 21907 E AsyncOperation: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+03-20 01:13:17.042  2321 21907 E AsyncOperation: 	at pol.run(Unknown Source:7)
+03-20 01:13:17.042  2321 21907 E AsyncOperation: 	at java.lang.Thread.run(Thread.java:764)
+03-20 01:13:17.062   787  1130 D         : ipc_resp_thread: opcode: 0x2, payload_size: 4, resp_buf size: 16
+03-20 01:13:17.062   787  1130 D         : pktzr_resp_cb: opcode = 0x2 size = 4 token = 2674
+03-20 01:13:17.062   787  1130 D         : pktzr_resp_cb: token 2674 matched
+03-20 01:13:17.063   787  1380 D sound_trigger_hw: set_device: disable device (1) = listen-cpe-handset-mic
+03-20 01:13:17.065   787  1380 D sound_trigger_hw: session[1]: active_state_fn ---> loaded_state_fn 
+03-20 01:13:17.065   787  1380 D sound_trigger_hw: stdev_stop_recognition:[1] Exit status 0
+03-20 01:13:17.066  2179  2179 I GsaVoiceInteractionSrv: Stop Hotword Recognition status: true
+03-20 01:13:17.135  2379 16350 I PBSessionCacheImpl: Deleted sessionId[195867617669515] from persistence.
+03-20 01:13:17.144  2379  2379 W SearchServiceCore: Abort, client detached.
+03-20 01:13:17.574 25885 25885 I dex2oat : The ClassLoaderContext is a special shared library.
+03-20 01:13:17.574 25885 25885 I dex2oat : /system/bin/dex2oat --dex-file=/data/user/0/org.chromium.chrome.tests/cache/0XXpLisv.jar --output-vdex-fd=56 --oat-fd=57 --oat-location=/data/user/0/org.chromium.chrome.tests/cache/oat/arm64/0XXpLisv.odex --compiler-filter=quicken --class-loader-context=&
+03-20 01:13:17.600 25885 25885 I dex2oat : dex2oat took 26.697ms (28.052ms cpu) (threads: 8) arena alloc=9KB (9992B) java alloc=128KB (131088B) native alloc=978KB (1002224B) free=3MB (3192080B)
+03-20 01:13:17.603 25859 25859 I um.chrome.test: The ClassLoaderContext is a special shared library.
+03-20 01:13:17.637 25859 25859 I Choreographer: Skipped 36 frames!  The application may be doing too much work on its main thread.
+03-20 01:13:17.802 25895 25895 I dex2oat : The ClassLoaderContext is a special shared library.
+03-20 01:13:17.803 25895 25895 I dex2oat : /system/bin/dex2oat --dex-file=/data/user/0/org.chromium.chrome.tests/cache/Svk4zMn1.jar --output-vdex-fd=60 --oat-fd=61 --oat-location=/data/user/0/org.chromium.chrome.tests/cache/oat/arm64/Svk4zMn1.odex --compiler-filter=quicken --class-loader-context=&
+03-20 01:13:17.824 25895 25895 I dex2oat : dex2oat took 22.337ms (21.146ms cpu) (threads: 8) arena alloc=3KB (3248B) java alloc=48KB (49168B) native alloc=1018KB (1043304B) free=1541KB (1578136B)
+03-20 01:13:17.826 25859 25878 I um.chrome.test: The ClassLoaderContext is a special shared library.
+03-20 01:13:18.119  2810  2844 D StateService: Voice call active: false
+03-20 01:13:18.120  2810  2844 I chatty  : uid=10064(com.google.modemservice) StateService identical 1 line
+03-20 01:13:18.120  2810  2844 D StateService: Voice call active: false
+03-20 01:13:18.121  2810  2844 D StateService: Continue audio device checking
+03-20 01:13:18.431 25904 25904 I dex2oat : The ClassLoaderContext is a special shared library.
+03-20 01:13:18.431 25904 25904 I dex2oat : /system/bin/dex2oat --dex-file=/data/user/0/org.chromium.chrome.tests/cache/J5uQt0RY.jar --output-vdex-fd=60 --oat-fd=61 --oat-location=/data/user/0/org.chromium.chrome.tests/cache/oat/arm64/J5uQt0RY.odex --compiler-filter=quicken --class-loader-context=&
+03-20 01:13:18.463 25904 25904 I dex2oat : dex2oat took 32.967ms (38.913ms cpu) (threads: 8) arena alloc=9KB (10104B) java alloc=128KB (131088B) native alloc=925KB (947480B) free=2MB (2722536B)
+03-20 01:13:18.466 25859 25859 I um.chrome.test: The ClassLoaderContext is a special shared library.
+03-20 01:13:18.472 25859 25859 W RecyclerView: No adapter attached; skipping layout
+03-20 01:13:18.518   644  2578 D SurfaceFlinger: duplicate layer name: changing com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity to com.google.android.apps.nexuslauncher/com.google.android.apps.nexuslauncher.NexusLauncherActivity#1
+03-20 01:13:18.526  2321  5219 E AsyncOperation: serviceID=40, operation=LogOperation
+03-20 01:13:18.526  2321  5219 E AsyncOperation: OperationException[Status{statusCode=Storage full, resolution=null}]
+03-20 01:13:18.526  2321  5219 E AsyncOperation: 	at nye.a(:com.google.android.gms@12862063@12.8.62 (100408-199405334):113)
+03-20 01:13:18.526  2321  5219 E AsyncOperation: 	at vyg.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):29)
+03-20 01:13:18.526  2321  5219 E AsyncOperation: 	at bbxh.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):2)
+03-20 01:13:18.526  2321  5219 E AsyncOperation: 	at pir.run(:com.google.android.gms@12862063@12.8.62 (100408-199405334):24)
+03-20 01:13:18.526  2321  5219 E AsyncOperation: 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1167)
+03-20 01:13:18.526  2321  5219 E AsyncOperation: 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:641)
+03-20 01:13:18.526  2321  5219 E AsyncOperation: 	at pol.run(Unknown Source:7)
+03-20 01:13:18.526  2321  5219 E AsyncOperation: 	at java.lang.Thread.run(Thread.java:764)
+03-20 01:13:18.530  2379  2379 W SessionLifecycleManager: Handover failed. Creating new session controller.
+03-20 01:13:18.534  2321  2886 W GCoreFlp: No location to return for getLastLocation()
+03-20 01:13:18.539  1486  1486 I WallpaperService: engine resumed
+03-20 01:13:18.548  2321 21907 W ctxmgr  : [AclManager]null policy map (0) 67, clientInfo=(accnt=account#-517948760#, com.google.android.googlequicksearchbox(10049):com.google.android.googlequicksearchbox, vrsn=12211000, 1, 3pPkg = null ,  3pMdlId = null ,  pid = 2379)
+03-20 01:13:18.548  2379 27537 E GmsContextObserver: Failed to register context manager listener: Status{statusCode=unknown status code: 7503, resolution=null}
+03-20 01:13:18.549  2321 21907 E ctxmgr  : [BaseServerTask]Failed network request due to no network connectivity: 
+03-20 01:13:18.549  2321 21907 E ctxmgr  : [DailyCheckinOperation]Failed daily get config: network status=1
+03-20 01:13:18.554  2321 21907 W ctxmgr  : [AclManager]null policy map (0) 67, clientInfo=(accnt=account#-517948760#, com.google.android.googlequicksearchbox(10049):com.google.android.googlequicksearchbox, vrsn=12211000, 1, 3pPkg = null ,  3pMdlId = null ,  pid = 2379)
+03-20 01:13:18.554  2321 21907 E ctxmgr  : [BaseServerTask]Failed network request due to no network connectivity: 
+03-20 01:13:
