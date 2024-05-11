@@ -1,3 +1,5 @@
+gh repo clone ModJuska123/javascript-testing
+
 version: 2
 updates:
   - package-ecosystem: "npm"
