@@ -11,8 +11,8 @@ En Le Pingouin en Sécurité, nos tomamos muy en serio la seguridad. Nos esforza
 
 ## Redes Sociales
 ¡Síguenos en nuestras redes sociales para estar al tanto de las últimas noticias y consejos de seguridad!
-- Facebook: Oswaldo Alonso
-- Instagram: LePingouinSecurite
+- Facebook: https://www.facebook.com/profile.php?id=61553964532277&mibextid=ZbWKwL 
+- Instagram: @AlonzithooDav
 
 ## ¿Cómo puedes ayudar?
 
@@ -33,10 +33,11 @@ Si te interesa apoyar nuestro proyecto, puedes hacerlo de las siguientes maneras
 ¡Gracias por tu interés en nuestro proyecto!
 
 Atentamente
-David Oswaldo Azamar Alonso 🐧❤️
 
 
-¡Gracias por tu interés en nuestro proyecto!
+# David Oswaldo Azamar Alonso 🐧❤️
+
+
 
 
 ![Logo de Le Pingou
