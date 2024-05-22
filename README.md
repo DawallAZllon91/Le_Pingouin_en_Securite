@@ -1,6 +1,18 @@
-# Bienvenidos a Le Pingouin en Sécurité
+![1716337715369](https://github.com/DawallAZllon91/fluffy-palm-tree/assets/146601218/dac4e963-4dbc-4cc9-98f1-3594c3b0c248)
 
-Este proyecto tiene como objetivo crear un entorno seguro en el sistema operativo Android. Nuestro equipo está comprometido en brindar la mejor experiencia en seguridad, creando un entorno fácil, autopersonalizable y basado en las necesidades de nuestros usuarios.
+
+# Le Pingouin en Sécurité
+
+## Descripción
+Le Pingouin en Sécurité es una empresa dedicada a proporcionar soluciones de seguridad informática y protección de datos. Nuestro objetivo es garantizar que tus sistemas estén a salvo de amenazas y vulnerabilidades.
+
+## Preocupación por la Seguridad
+En Le Pingouin en Sécurité, nos tomamos muy en serio la seguridad. Nos esforzamos por mantener un entorno libre de clonaciones maliciosas y aplicaciones dañinas que puedan afectar tus servidores y software.
+
+## Redes Sociales
+¡Síguenos en nuestras redes sociales para estar al tanto de las últimas noticias y consejos de seguridad!
+- Facebook: Oswaldo Alonso
+- Instagram: LePingouinSecurite
 
 ## ¿Cómo puedes ayudar?
 
@@ -24,8 +36,7 @@ Atentamente
 David Oswaldo Azamar Alonso 🐧❤️
 
 
-
-
-
 ¡Gracias por tu interés en nuestro proyecto!
 
+
+![Logo de Le Pingou
