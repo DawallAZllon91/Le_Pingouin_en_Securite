@@ -1,3 +1,7 @@
+<gupdate xmlns="http://www.google.com/update2/response" protocol="2.0" server="prod">
+<daystart elapsed_days="6355" elapsed_seconds="10336"/>
+</gupdate>
+
 {
   "update_url": "https://clients2.google.com/service/update2/crx",
   "manifest_version": 2,
